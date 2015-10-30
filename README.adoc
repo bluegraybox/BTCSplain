@@ -23,29 +23,40 @@ The classic one is called Rot-13, where you just "rotate" each letter of the alp
 To decrypt the message, you just rotate each letter back by 13.
 In short:
 
- your message -> math! -> encrypted message
+--
+message -> math! -> encrypted message
+--
 
 Modern encryption is way more sophisticated, but fundamentally it's still:
 
- data -> math! -> encrypted data
+--
+data -> math! -> encrypted data
+--
 
 One thing that's been added is the concept of "keys":
 
- data -> math(key)! -> encrypted data
+--
+data -> math(key)! -> encrypted data
+--
 
 The math part doesn't have to be secret (and it's generally accepted that the more public scrutiny the math is exposed to, the more trustworthy it is).
 What's secret is the key.
 Normally (in what we'll now call "symmetric key cryptography") you use the same key for encrypting and decrypting:
 
- data -> math(key)! -> encrypted data -> math(key)! -> data
+--
+data -> math(key)! -> encrypted data -> math(key)! -> data
+--
 
 The tricky thing with this scheme is getting the key safely to someone else that you want to be able to decrypt your message.
 
 In public key cryptography, there are two keys.
 You can use either key to encrypt, but anything you encrypt with one can only be decrypted with the other:
 
- data -> math(keyA)! -> encrypted data -> math(keyB)! -> data
- data -> math(keyA)! -> encrypted data -> math(keyA)! -> garbage
+--
+data -> math(keyA)! -> encrypted data -> math(keyB)! -> data
+
+data -> math(keyA)! -> encrypted data -> math(keyA)! -> garbage
+--
 
 One of them is private, one is public.
 The private key, you have to keep safe and secret. Really, really safe.
@@ -67,7 +78,9 @@ How you deal with keys being stolen is a whole topic on its own. We'll skip that
 
 A hash function is math that takes in data and spits out a single number:
 
- data -> math! -> number
+--
+data -> math! -> number
+--
 
 The data can be anything from a single letter to a high-def movie file.
 The important thing here is that the same input data always generates the same number.
