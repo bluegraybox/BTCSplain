@@ -1,6 +1,9 @@
 = Bitcoin & Blockchain, 'Splain'd
 :toc:
-:toc-placement: preamble
+:toc-placement!:
+:toclevels: 2
+
+toc::[]
 
 == Preamble
 
