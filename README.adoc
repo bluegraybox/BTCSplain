@@ -1,0 +1,76 @@
+= Bitcoin & Blockchain, 'Splain'd
+:toc:
+:toc-placement: preamble
+
+== Preamble
+
+I've been talking to people about Bitcoin lately, and I keep getting fairly obvious questions that you can't really answer without explaining a bit about what's going on under the hood.
+
+I think that it's totally understandable to just about anyone.
+Bitcoin is kinda complex, but it's made up of a bunch of simple pieces that work together in clever ways.
+Once you understand the building blocks, you can build an understanding of how the whole thing fits together.
+
+There are two bits of technology underlying Bitcoin that we're going to just treat as magic: Public key cryptography, and cryptographic hash functions.
+What they do is fairly simple. How they do it is really advanced math. It's way over my head, so we're not going to get into it here.
+
+== Public Key Cryptography
+
+In the oldest, simplest forms of cryptography, you have a message, and you replace each letter in it with a different letter according to some secret formula.
+The classic one is called Rot-13, where you just "rotate" each letter of the alphabet by 13, so "a" becomes "n", "b" becomes "o", and so on.
+To decrypt the message, you just rotate each letter back by 13.
+In short: your message -> math! -> encrypted message.
+
+Modern encryption is way more sophisticated, but fundamentally it's still: data -> math! -> encrypted data.
+One thing that's been added is the concept of "keys": data -> math(key)! -> encrypted data.
+The math part doesn't have to be secret (and it's generally accepted that the more public scrutiny the math is exposed to, the more trustworthy it is).
+What's secret is the key.
+Normally (in what we'll now call "symmetric key cryptography") you use the same key for encrypting and decrypting: data -> math(key)! -> encrypted data -> math(key)! -> data.
+
+The tricky thing with this scheme is getting the key safely to someone else that you want to be able to decrypt your message.
+
+In public key cryptography, there are two keys.
+You can use either key to encrypt, but anything you encrypt with one can only be decrypted with the other:
+* data -> math(keyA)! -> encrypted data -> math(keyB)! -> data
+* data -> math(keyA)! -> encrypted data -> math(keyA)! -> garbage
+One of them is private, one is public.
+The private key, you have to keep safe and secret. Really, really safe.
+The public key, you give out to anyone. Publish it.
+
+You can send someone a secret message by encrypting it with their public key.
+As long as only they have their private key, only they can decrypt it.
+Two points that we'll come back to later: If they lose their private key, they can't decrypt it; and anyone who steals their private key can decrypt it.
+
+The other thing you can do is encrypt a message with your private key.
+Anyone can decrypt it with your public key, so it's not a secret, but they know that you encrypted it.
+
+We can do both of these in combination.
+If I encrypt something with my private key and your public key, only you can read it, and you know it came from me.
+
+How you deal with keys being stolen is a whole topic on its own. We'll skip that for now.
+
+== Cryptographic Hash Functions
+
+A hash function is math that takes in data and spits out a single number: data -> math! -> number.
+The data can be anything from a single letter to a high-def movie file.
+The important thing here is that the same input data always generates the same number.
+
+*Cryptographic* hash functions use really sophisticated math to guarantee that this is a one-way street.
+You can't figure out what the original data was based on the number.
+If you have some data, you can run it through the hash function and see if you get the same number, but that's all.
+If you modify the data, you'll get a completely different random number.
+(It's not technically "random" because the same input data always produces the same number, but it's what non-mathematicians think of as random.)
+There's no way to modify the data and get the same number, or find another set of data that generates the same number.
+
+It may help to know that when we say "number", we're talking a really big number.
+The hash function used by Bitcoin produces a 256 bit number, so between 0 and about 10^77. That's getting into the "number of atoms in the universe" range.
+So where I said, "you can't", I mean it's like trying to guess a random number in that range.
+
+== Digital Signatures
+
+As mentioned, I could encrypt a document with my private key, and anyone could decrypt it and verify that it came from me.
+But a better option is to run the document through a hash function, then just encrypt the resulting number with your private key. That's a digital signature.
+The document is readable, but anyone can easily verify the signature by decrypting it with your public key, hashing the document, and comparing the two.
+
+== Bitcoin Transactions
+
+
