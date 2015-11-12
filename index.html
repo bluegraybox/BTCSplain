@@ -424,32 +424,47 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
+<div class="paragraph">
+<p><em>View on <a href="http://bluegraybox.github.io/BTCSplain/">GitHub Pages</a></em></p>
+</div>
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_preamble">Preamble</a></li>
 <li><a href="#_public_key_cryptography">Public Key Cryptography</a></li>
 <li><a href="#_cryptographic_hash_functions">Cryptographic Hash Functions</a></li>
 <li><a href="#_digital_signatures">Digital Signatures</a></li>
 <li><a href="#_bitcoin_transactions">Bitcoin Transactions</a></li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_preamble">Preamble</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>I&#8217;ve been talking to people about Bitcoin lately, and I keep getting fairly obvious questions that you can&#8217;t really answer without explaining a bit about what&#8217;s going on under the hood.</p>
-</div>
-<div class="paragraph">
-<p>I think that it&#8217;s totally understandable to just about anyone.
-Bitcoin is kinda complex, but it&#8217;s made up of a bunch of simple pieces that work together in clever ways.
-Once you understand the building blocks, you can build an understanding of how the whole thing fits together.</p>
+<p>I&#8217;ve been to a number of talks about Bitcoin and Blockchain recently, and I&#8217;ve found them kinda frustrating.
+They&#8217;re given by enthusiasts who go on about all the cool things you&#8217;ll be able to do with these technologies, without explaining how they work.
+I understand not wanting to get too deep in the weeds for a general audience, but without a basic grasp of how these technologies work, people can&#8217;t trust them.
+That&#8217;s a problem because the entire point of Bitcoin is to replace trust in institutions - government and banks - with trust in technology.
+If you don&#8217;t understand the technology, you&#8217;re trusting the people selling the technology.
+And you should always be skeptical around people trying to sell you something.
+That goes double when they&#8217;re claiming to solve a long-standing human problem.</p>
 </div>
 <div class="paragraph">
-<p>There are two bits of technology underlying Bitcoin that we&#8217;re going to just treat as magic: Public key cryptography, and cryptographic hash functions.
-What they do is fairly simple. How they do it is really advanced math. It&#8217;s way over my head, so we&#8217;re not going to get into it here.</p>
+<p>And I&#8217;ll tell you now that Bitcoin and Blockchain are not magical, perfect, and flawless.
+They have problems - some straightforwardly technical and probably solvable, but some at that tricky and unavoidable intersection of people and technology.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;m going to use words like "never", "impossible", and "cannot" a number of times in this essay.
+You should imagine that they always have a little asterisk next to them referring you to a footnote with a long-winded caveat about breakthroughs in fundamental mathematical theory, advances in quantum computing, or mistakes in software implementations.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;m not going to go all that deep, but I want to strip away at least one layer of magic.
+Bitcoin builds on a few well-understood cryptographic technologies.
+While Bitcoin combines and uses them in new ways, these are the same tools you use every time you go to a secure web site.
+They have survived decades of scrutiny.
+I trust them.</p>
+</div>
+<div class="paragraph">
+<p>There are only two fundamental tools, and everything else builds on them.
+They are public key cryptography, and hash functions.
+They&#8217;re based on some really complicated math, stuff that&#8217;s way over my head.
+The good news is that you don&#8217;t have to understand the math, just what they do.</p>
 </div>
 </div>
 </div>
@@ -457,7 +472,7 @@ What they do is fairly simple. How they do it is really advanced math. It&#8217;
 <h2 id="_public_key_cryptography">Public Key Cryptography</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the oldest, simplest forms of cryptography, you have a message, and you replace each letter in it with a different letter according to some secret formula.
+<p>In the oldest, simplest forms of cryptography, you take a message and replace each letter in it with a different letter according to some secret formula.
 The classic one is called Rot-13, where you just "rotate" each letter of the alphabet by 13, so "a" becomes "n", "b" becomes "o", and so on.
 To decrypt the message, you just rotate each letter back by 13.
 In short:</p>
@@ -490,7 +505,7 @@ In short:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The math part doesn&#8217;t have to be secret (and it&#8217;s generally accepted that the more public scrutiny the math is exposed to, the more trustworthy it is).
+<p>Here the math part doesn&#8217;t have to be secret (and the more public scrutiny it gets, the more trustworthy it is).
 What&#8217;s secret is the key.
 Normally (in what we&#8217;ll now call "symmetric key cryptography") you use the same key for encrypting and decrypting:</p>
 </div>
@@ -511,8 +526,8 @@ You can use either key to encrypt, but anything you encrypt with one can only be
 <div class="sidebarblock">
 <div class="content">
 <div class="paragraph">
-<p>data &#8594; math(keyA)! &#8594; encrypted data &#8594; math(keyB)! &#8594; data<br>
-data &#8594; math(keyA)! &#8594; encrypted data &#8594; math(keyA)! &#8594; garbage</p>
+<p>data &#8594; math(keyA)! &#8594; encrypted data &#8594; math(<strong>keyB</strong>)! &#8594; data<br>
+data &#8594; math(keyA)! &#8594; encrypted data &#8594; math(<strong>keyA</strong>)! &#8594; garbage</p>
 </div>
 </div>
 </div>
@@ -590,7 +605,7 @@ The document is readable, but anyone can easily verify the signature by decrypti
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-11-02 11:19:51 EST
+Last updated 2015-11-11 21:31:19 EST
 </div>
 </div>
 </body>
