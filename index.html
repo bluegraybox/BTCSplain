@@ -430,15 +430,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#_symmetric_cryptography">Symmetric Cryptography</a></li>
 <li><a href="#_public_key_cryptography">Public Key Cryptography</a></li>
 <li><a href="#_cryptographic_hash_functions">Cryptographic Hash Functions</a></li>
 <li><a href="#_digital_signatures">Digital Signatures</a></li>
-<li><a href="#_bitcoin_transactions">Bitcoin Transactions</a></li>
+<li><a href="#_transactions">Transactions</a></li>
+<li><a href="#_blockchain">Blockchain</a></li>
+<li><a href="#_proof_of_work">Proof of Work</a></li>
+<li><a href="#_smart_contracts">Smart Contracts</a></li>
 </ul>
 </div>
 <div class="paragraph">
 <p>I&#8217;ve been to a number of talks about Bitcoin and Blockchain recently, and I&#8217;ve found them kinda frustrating.
-They&#8217;re given by enthusiasts who go on about all the cool things you&#8217;ll be able to do with these technologies, without explaining how they work.
+They&#8217;re given by enthusiasts who go on about all the cool things you&#8217;ll be able to do with these technologies, how they&#8217;re going to revolutionize finance and commerce, without explaining how they work.
 I understand not wanting to get too deep in the weeds for a general audience, but without a basic grasp of how these technologies work, people can&#8217;t trust them.
 That&#8217;s a problem because the entire point of Bitcoin is to replace trust in institutions - government and banks - with trust in technology.
 If you don&#8217;t understand the technology, you&#8217;re trusting the people selling the technology.
@@ -450,8 +454,10 @@ That goes double when they&#8217;re claiming to solve a long-standing human prob
 They have problems - some straightforwardly technical and probably solvable, but some at that tricky and unavoidable intersection of people and technology.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;m going to use words like "never", "impossible", and "cannot" a number of times in this essay.
-You should imagine that they always have a little asterisk next to them referring you to a footnote with a long-winded caveat about breakthroughs in fundamental mathematical theory, advances in quantum computing, or mistakes in software implementations.</p>
+<p>Just a note: I&#8217;m going to use words like "never", "impossible", and "cannot".
+You should imagine that they always have a little asterisk next to them referring you to a footnote with a long-winded caveat about breakthroughs in fundamental mathematical theory, advances in quantum computing, or mistakes in software implementations.
+I&#8217;m also going to use words like "unlikely" and "improbable". These are understatements.
+They describe probabilities like 1/N where N is the number of atoms in the universe (NoAiU).</p>
 </div>
 <div class="paragraph">
 <p>I&#8217;m not going to go all that deep, but I want to strip away at least one layer of magic.
@@ -464,12 +470,12 @@ I trust them.</p>
 <p>There are only two fundamental tools, and everything else builds on them.
 They are public key cryptography, and hash functions.
 They&#8217;re based on some really complicated math, stuff that&#8217;s way over my head.
-The good news is that you don&#8217;t have to understand the math, just what they do.</p>
+The good news is that you don&#8217;t have to understand the math, just what it does.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_public_key_cryptography">Public Key Cryptography</h2>
+<h2 id="_symmetric_cryptography">Symmetric Cryptography</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the oldest, simplest forms of cryptography, you take a message and replace each letter in it with a different letter according to some secret formula.
@@ -519,6 +525,11 @@ Normally (in what we&#8217;ll now call "symmetric key cryptography") you use the
 <div class="paragraph">
 <p>The tricky thing with this scheme is getting the key safely to someone else that you want to be able to decrypt your message.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_public_key_cryptography">Public Key Cryptography</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In public key cryptography, there are two keys.
 You can use either key to encrypt, but anything you encrypt with one can only be decrypted with the other:</p>
@@ -534,7 +545,8 @@ data &#8594; math(keyA)! &#8594; encrypted data &#8594; math(<strong>keyA</stron
 <div class="paragraph">
 <p>One of them is private, one is public.
 The private key, you have to keep safe and secret. Really, really safe.
-The public key, you give out to anyone. Publish it.</p>
+The public key, you give out to anyone. Publish it.
+Register it with your email address in a public registry.</p>
 </div>
 <div class="paragraph">
 <p>You can send someone a secret message by encrypting it with their public key.
@@ -550,7 +562,7 @@ Anyone can decrypt it with your public key, so it&#8217;s not a secret, but they
 If I encrypt something with my private key and your public key, only you can read it, and you know it came from me.</p>
 </div>
 <div class="paragraph">
-<p>How you deal with keys being stolen is a whole topic on its own. We&#8217;ll skip that for now.</p>
+<p>How you deal with keys being stolen is a whole topic on its own. We&#8217;ll get to that later.</p>
 </div>
 </div>
 </div>
@@ -558,7 +570,8 @@ If I encrypt something with my private key and your public key, only you can rea
 <h2 id="_cryptographic_hash_functions">Cryptographic Hash Functions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A hash function is math that takes in data and spits out a single number:</p>
+<p>A hash function is math that takes in data and spits out a single number.
+The data can be anything from a single byte to a high-def movie file.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -568,21 +581,50 @@ If I encrypt something with my private key and your public key, only you can rea
 </div>
 </div>
 <div class="paragraph">
-<p>The data can be anything from a single letter to a high-def movie file.
-The important thing here is that the same input data always generates the same number.</p>
+<p>There are a few key things about this:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The same data always generates the same number</p>
+</li>
+<li>
+<p>It&#8217;s not reversible - you can&#8217;t reconstruct the input data from the output number</p>
+</li>
+<li>
+<p>Different data can generate the same number (a "collision")</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p><strong>Cryptographic</strong> hash functions use really sophisticated math to guarantee that this is a one-way street.
-You can&#8217;t figure out what the original data was based on the number.
-If you have some data, you can run it through the hash function and see if you get the same number, but that&#8217;s all.
-If you modify the data, you&#8217;ll get a completely different random number.
-(It&#8217;s not technically "random" because the same input data always produces the same number, but it&#8217;s what non-mathematicians think of as random.)
-There&#8217;s no way to modify the data and get the same number, or find another set of data that generates the same number.</p>
+<p><strong>Cryptographic</strong> hash functions use really sophisticated math to guarantee a few more things:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Collisions are highly unlikely (again, 1/NoAiU)</p>
+</li>
+<li>
+<p>Modifying the data slightly generates a completely different output, and its corollary,</p>
+</li>
+<li>
+<p>There&#8217;s no way to predictably modify the data to generate a specific output</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>It may help to know that when we say "number", we&#8217;re talking a really big number.
-The hash function used by Bitcoin produces a 256 bit number, so between 0 and about 10^77. That&#8217;s getting into the "number of atoms in the universe" range.
-So where I said, "you can&#8217;t", I mean it&#8217;s like trying to guess a random number in that range.</p>
+<p>This gives you a shorthand way to ask, "Have I seen this before?"
+It&#8217;s really useful for two kinds of data: secret things and big things.</p>
+</div>
+<div class="paragraph">
+<p>So for example, an authentication system could store the hash of a password rather than the password itself.
+When someone enters a password, its hash is calculated and compared to the stored value.
+If someone steals the stored value, all it lets them do is guess at the password and know if they guessed right.
+(They can try a lot of guesses really fast, which is why you should have long passwords that are not normal words.)</p>
+</div>
+<div class="paragraph">
+<p>This also gives you a shortcut for comparing data files: Rather than checking byte by byte, you can calculate the hash of both, and compare those.
+For example, I wrote a tiny Ruby script that went through all my MP3 files to look for duplicates.</p>
 </div>
 </div>
 </div>
@@ -591,13 +633,92 @@ So where I said, "you can&#8217;t", I mean it&#8217;s like trying to guess a ran
 <div class="sectionbody">
 <div class="paragraph">
 <p>As mentioned, I could encrypt a document with my private key, and anyone could decrypt it and verify that it came from me.
-But a better option is to run the document through a hash function, then just encrypt the resulting number with your private key. That&#8217;s a digital signature.
-The document is readable, but anyone can easily verify the signature by decrypting it with your public key, hashing the document, and comparing the two.</p>
+But a better option is to run the document through a hash function, then just encrypt the hash value with your private key. That&#8217;s a digital signature.
+The document is readable, but anyone can verify the signature by decrypting it with your public key, hashing the document, and comparing the two.</p>
+</div>
+<div class="paragraph">
+<p><strong>Signing</strong></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/signature-1.png" alt="create signature"></span></p>
+</div>
+<div class="paragraph">
+<p><strong>Verification</strong></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/signature-2.png" alt="verify signature"></span></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bitcoin_transactions">Bitcoin Transactions</h2>
+<h2 id="_transactions">Transactions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When we talk about someone paying you in bitcoin, we imagine that it&#8217;s like them giving you cash.
+They hand it over, and you have the cash.
+That&#8217;s an oversimplification.
+Let me give you a more accurate metaphor.</p>
+</div>
+<div class="paragraph">
+<p>You have a public/private key pair.
+You are known to the world only by your public key.
+Rather than giving you cash directly, someone transfers bitcoin to you by putting it in a box and locking it with your public key.
+It&#8217;s not that you really have that money, but you&#8217;re the only one who can open that box and give it to someone else.
+The amount of bitcoin you "own" is the sum of all the boxes you can open.</p>
+</div>
+<div class="paragraph">
+<p>When you unlock a box, you can&#8217;t re-lock it. All the money in it has to go somewhere.
+If you have a box with 5 bitcoin in it, and you want to give 2 to someone, you put 2 in a box locked with their public key, and 3 in a box locked with yours.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/transactions-1.png" alt="split payment"></span></p>
+</div>
+<div class="paragraph">
+<p>You can also do many-to-one or many-to-many transactions.
+You can take a bunch of little payments you&#8217;ve received, combine them into one bigger payment to someone else, and pay the difference back to yourself.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/transactions-2.png" alt="many-to-many"></span></p>
+</div>
+<div class="paragraph">
+<p>A Transaction, as it&#8217;s stored in the bitcoin system, is a set of input boxes and output boxes - payments from and to.
+Every input box is the output box from another transaction.</p>
+</div>
+<div class="paragraph">
+<p>So how is this enforced? What stops you from pretending to be someone else and using their transactions?
+The transaction output doesn&#8217;t just have a public key; it has a little executable script that is used to verify any claims to it.
+Typically, the script takes a public key and a signature of its own transaction as inputs.
+It checks that the public key is the one expected, uses that public key to decrypt the signature, and compares that to the hash of its transaction.
+That proves that the signer has the private key matching the pubic key.
+(The script actually includes a hash of the public key, not the full key, which is safer and more compact.)</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/transactions-3.png" alt="verify"></span></p>
+</div>
+<div class="paragraph">
+<p>So the whole chain looks like this:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/transaction.png" alt="transactions"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_blockchain">Blockchain</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_proof_of_work">Proof of Work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Bitcoin only.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_smart_contracts">Smart Contracts</h2>
 <div class="sectionbody">
 
 </div>
@@ -605,7 +726,7 @@ The document is readable, but anyone can easily verify the signature by decrypti
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-11-11 21:31:19 EST
+Last updated 2016-05-09 00:12:01 EDT
 </div>
 </div>
 </body>
