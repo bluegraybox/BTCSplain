@@ -1,0 +1,27 @@
+digraph G {
+    rankdir=LR;
+    graph [
+        K=1.0,
+        overlap=false,
+        splines = spline,
+    ];
+    node [
+        shape=box
+        style="rounded,bold"
+        color="#9999ff",
+        fontcolor="#9999ff",
+        fontname="Helvetica-bold",
+    ];
+    edge [
+        # arrowsize=2,
+        color="#9999ff",
+    ];
+    "transaction!" [color=red, fontcolor=red]
+
+    "3 BTC to Alice" -> "transaction!"
+    "1 BTC to Alice" -> "transaction!"
+    "4 BTC to Alice" -> "transaction!"
+
+    "transaction!" -> "6 BTC to Bob"
+    "transaction!" -> "2 BTC to Alice"
+}
