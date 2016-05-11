@@ -624,7 +624,9 @@ If someone steals the stored value, all it lets them do is guess at the password
 </div>
 <div class="paragraph">
 <p>This also gives you a shortcut for comparing data files: Rather than checking byte by byte, you can calculate the hash of both, and compare those.
-For example, I wrote a tiny Ruby script that went through all my MP3 files to look for duplicates.</p>
+For example, I wrote a tiny Ruby script that went through all my MP3 files to look for duplicates.
+It read each file, calculated a hash for it, and used that as the key for a dictionary of file paths.
+If the hash was already in the dictionary, it printed out a message with that file path and the new one saying they were duplicates.</p>
 </div>
 </div>
 </div>
@@ -654,21 +656,29 @@ The document is readable, but anyone can verify the signature by decrypting it w
 <h2 id="_transactions">Transactions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When we talk about someone paying you in bitcoin, we imagine that it&#8217;s like them giving you cash.
-They hand it over, and you have the cash.
-That&#8217;s an oversimplification.
-Let me give you a more accurate metaphor.</p>
+<p>Ok, now we&#8217;re getting into the actual bitcoin and blockchain part of this.
+It gets a little weird and complicated, so we&#8217;re going to inch our way toward the truth.</p>
 </div>
 <div class="paragraph">
-<p>You have a public/private key pair.
-You are known to the world only by your public key.
-Rather than giving you cash directly, someone transfers bitcoin to you by putting it in a box and locking it with your public key.
-It&#8217;s not that you really have that money, but you&#8217;re the only one who can open that box and give it to someone else.
-The amount of bitcoin you "own" is the sum of all the boxes you can open.</p>
+<p>When we talk about bitcoin payments, we imagine that it&#8217;s like exchanging cash, and a lot of the hype around bitcoin reinforces this.
+But that&#8217;s actually a really misleading metaphor.
+The blockchain is a shared ledger.
+It&#8217;s like a big book with every transaction ever written in it.
+The only reason it&#8217;s anonymous "like cash" is that everyone is only identified by their public key.
+(And you can use multiple key pairs to muddy the waters a bit.)</p>
 </div>
 <div class="paragraph">
-<p>When you unlock a box, you can&#8217;t re-lock it. All the money in it has to go somewhere.
-If you have a box with 5 bitcoin in it, and you want to give 2 to someone, you put 2 in a box locked with their public key, and 3 in a box locked with yours.</p>
+<p>What&#8217;s recorded in the ledger is not "Alice has 200 BTC" or "the owner of key 43b46ef2e6 has 200 BTC".
+It&#8217;s more like "b05eaffdb5 transfered 5 BTC to 43b46ef2e6".
+The bitcoin you "have" is the sum of all the transfers to you.</p>
+</div>
+<div class="paragraph">
+<p>When you make a payment, you don&#8217;t have a pool of money to pay it out of; you have a bunch of individual transactions.
+So you have to say something like "take that 5 BTC from transaction 13a16e415d and give it to 72fc388ab6."</p>
+</div>
+<div class="paragraph">
+<p>When you "spend" a transaction like that, you have to spend all of it, but you can split it up and pay some of it back to yourself.
+"From transaction 13a16e415d and give 2 BTC to 72fc388ab6 and 3 BTC to 43b46ef2e6."</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="img/transactions-1.png" alt="split payment"></span></p>
@@ -681,32 +691,62 @@ You can take a bunch of little payments you&#8217;ve received, combine them into
 <p><span class="image"><img src="img/transactions-2.png" alt="many-to-many"></span></p>
 </div>
 <div class="paragraph">
-<p>A Transaction, as it&#8217;s stored in the bitcoin system, is a set of input boxes and output boxes - payments from and to.
-Every input box is the output box from another transaction.</p>
+<p>A Transaction, as it&#8217;s stored in the bitcoin system, is a set of inputs and outputs - payments from and to.
+Every input is the output from another transaction.</p>
 </div>
 <div class="paragraph">
-<p>So how is this enforced? What stops you from pretending to be someone else and using their transactions?
-The transaction output doesn&#8217;t just have a public key; it has a little executable script that is used to verify any claims to it.
-Typically, the script takes a public key and a signature of its own transaction as inputs.
-It checks that the public key is the one expected, uses that public key to decrypt the signature, and compares that to the hash of its transaction.
-That proves that the signer has the private key matching the pubic key.
-(The script actually includes a hash of the public key, not the full key, which is safer and more compact.)</p>
+<p>So how is this enforced? What stops you from pretending to be someone else and using their transactions?</p>
+</div>
+<div class="paragraph">
+<p>The transaction output doesn&#8217;t just have a public key; it has a little executable script that is used to verify any claims to it.
+The script takes a public key and a signature of its own transaction as inputs - that&#8217;s what you have to provide to claim it.
+The script checks that the public key is the one expected, uses that public key to decrypt the signature provided, and compares that to the hash of its own transaction.
+That proves that the claimant has the private key matching the pubic key required.
+The process is:</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="img/transactions-3.png" alt="verify"></span></p>
 </div>
 <div class="paragraph">
-<p>So the whole chain looks like this:</p>
+<p>In pseudocode, that&#8217;s:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>function valid(signature, publicKey) {
+    return hash(publicKey) == "43b46ef2e61a3d6a725fe70fe2b3adaadbca7348" &amp;&amp;
+        decrypt(signature, publicKey) == hash(inputTransactionBytes())
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And the actual scripting langauge looks like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>OP_DUP OP_HASH160 43b46ef2e61a3d6a725fe70fe2b3adaadbca7348 OP_EQUALVERIFY OP_CHECKSIG</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(The script actually includes a hash of the public key, not the full key, which is safer and more compact.)</p>
+</div>
+<div class="paragraph">
+<p>So a chain of transactions could look like:</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="img/transaction.png" alt="transactions"></span></p>
+</div>
+<div class="paragraph">
+<p>Ok, fine, so we have all these transactions with their inputs and outputs and little scripts.
+Who actually verifies them, and how do we keep someone from fiddling with the numbers?</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_blockchain">Blockchain</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p><span class="image"><img src="img/blockchain.png" alt="blockchain"></span></p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -714,6 +754,9 @@ That proves that the signer has the private key matching the pubic key.
 <div class="sectionbody">
 <div class="paragraph">
 <p>Bitcoin only.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/proof_of_work.png" alt="proof of work"></span></p>
 </div>
 </div>
 </div>
@@ -726,7 +769,7 @@ That proves that the signer has the private key matching the pubic key.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-09 00:12:01 EDT
+Last updated 2016-05-11 07:18:00 EDT
 </div>
 </div>
 </body>
