@@ -1,5 +1,6 @@
 = Bitcoin & Blockchain, 'Splain'd
 // asciidoctor -o index.html README.adoc
+:source-highlighter: pygments // coderay, highlightjs, prettify, and pygments
 :toc:
 :toc-placement!:
 :toclevels: 2
@@ -8,21 +9,25 @@ _View on http://bluegraybox.github.io/BTCSplain/[GitHub Pages]_
 
 toc::[]
 
+Let me start out by clarifying the difference between Bitcoin and Blockchain, in broad strokes, for anyone not familiar with them.
+"Bitcoin" is used to refer to both the digital currency - the unit of value - and the software system that allows you to exchange this currency.
+I'll use BTC for clarity when referring to the currency.
+Mostly, we're going to be talking about the system.
+
+Blockchain is basically a special-purpose distributed database.
+It's like an account book - the part of the system that stores transactions - and Bitcoin wraps software around it to control how transactions get added.
+Some of that logic is specific to Bitcoin's idea of totally anonymous, decentralized trust.
+If you're a group of banks trying to record transactions, or a group of people within an organization, you can still use Blockchain, but wrap different rules around it.
+
 I've been to a number of talks about Bitcoin and Blockchain recently, and I've found them kinda frustrating.
 They're given by enthusiasts who go on about all the cool things you'll be able to do with these technologies, how they're going to revolutionize finance and commerce, without explaining how they work.
 I understand not wanting to get too deep in the weeds for a general audience, but without a basic grasp of how these technologies work, people can't trust them.
 That's a problem because the entire point of Bitcoin is to replace trust in institutions - government and banks - with trust in technology.
 If you don't understand the technology, you're trusting the people selling the technology.
-And you should always be skeptical around people trying to sell you something.
-That goes double when they're claiming to solve a long-standing human problem.
+And you should always be skeptical of people trying to sell you something.
 
-And I'll tell you now that Bitcoin and Blockchain are not magical, perfect, and flawless.
+Spoiler: Bitcoin and Blockchain are not magical, perfect, and flawless.
 They have problems - some straightforwardly technical and probably solvable, but some at that tricky and unavoidable intersection of people and technology.
-
-Just a note: I'm going to use words like "never", "impossible", and "cannot".
-You should imagine that they always have a little asterisk next to them referring you to a footnote with a long-winded caveat about breakthroughs in fundamental mathematical theory, advances in quantum computing, or mistakes in software implementations.
-I'm also going to use words like "unlikely" and "improbable". These are understatements.
-They describe probabilities like 1/N where N is the number of atoms in the universe (NoAiU).
 
 I'm not going to go all that deep, but I want to strip away at least one layer of magic.
 Bitcoin builds on a few well-understood cryptographic technologies.
@@ -35,30 +40,38 @@ They are public key cryptography, and hash functions.
 They're based on some really complicated math, stuff that's way over my head.
 The good news is that you don't have to understand the math, just what it does.
 
+Just a note: I'm going to use words like "never", "impossible", and "cannot".
+You should imagine that they always have a little asterisk next to them referring you to a footnote with a long-winded caveat about breakthroughs in fundamental mathematical theory, advances in quantum computing, or mistakes in software implementations.
+I'm also going to use words like "unlikely" and "improbable". These are understatements.
+They describe probabilities like 1/N where N is the number of atoms in the universe (NoAiU, for later).
+
 == Symmetric Cryptography
 
-In the oldest, simplest forms of cryptography, you take a message and replace each letter in it with a different letter according to some secret formula.
-The classic one is called Rot-13, where you just "rotate" each letter of the alphabet by 13, so "a" becomes "n", "b" becomes "o", and so on.
-To decrypt the message, you just rotate each letter back by 13.
+In the oldest, simplest forms of cryptography, you take a message and replace each letter in it with a different letter according to some formula.
 In short:
 
 ****
 message -> math! -> encrypted message
 ****
 
+Here, the math is the secret part. If you know the math, you can decrypt the message.
+A classic one is Rot-13, where you "rotate" each letter of the alphabet by 13, so "a" becomes "n", "b" becomes "o", and so on.
+To decrypt the message, you just rotate each letter back.
+It's a pretty dumb cipher.
 Modern encryption is way more sophisticated, but fundamentally it's still:
 
 ****
 data -> math! -> encrypted data
 ****
 
-One thing that's been added is the concept of "keys":
+One important innovation is the concept of "keys":
 
 ****
 data -> math(key)! -> encrypted data
 ****
 
-Here the math part doesn't have to be secret (and the more public scrutiny it gets, the more trustworthy it is).
+Here the math part is not the secret.
+In fact, the more public scrutiny it gets, the more trustworthy it is.
 What's secret is the key.
 Normally (in what we'll now call "symmetric key cryptography") you use the same key for encrypting and decrypting:
 
@@ -85,7 +98,7 @@ Register it with your email address in a public registry.
 
 You can send someone a secret message by encrypting it with their public key.
 As long as only they have their private key, only they can decrypt it.
-Two points that we'll come back to later: If they lose their private key, they can't decrypt it; and anyone who steals their private key can decrypt it.
+This has two corollaries that we'll come back to later: If they lose their private key, they can't decrypt it; and anyone who steals their private key can.
 
 The other thing you can do is encrypt a message with your private key.
 Anyone can decrypt it with your public key, so it's not a secret, but they know that you encrypted it.
@@ -113,8 +126,8 @@ There are a few key things about this:
 *Cryptographic* hash functions use really sophisticated math to guarantee a few more things:
 
 * Collisions are highly unlikely (again, 1/NoAiU)
-* Modifying the data slightly generates a completely different output, and its corollary,
-* There's no way to predictably modify the data to generate a specific output
+* Modifying the data slightly generates a completely different output
+* There's no way to predictably modify the data to generate a specific output (to cause a collision)
 
 This gives you a shorthand way to ask, "Have I seen this before?"
 It's really useful for two kinds of data: secret things and big things.
@@ -122,12 +135,31 @@ It's really useful for two kinds of data: secret things and big things.
 So for example, an authentication system could store the hash of a password rather than the password itself.
 When someone enters a password, its hash is calculated and compared to the stored value.
 If someone steals the stored value, all it lets them do is guess at the password and know if they guessed right.
-(They can try a lot of guesses really fast, which is why you should have long passwords that are not normal words.)
+(They can try a lot of guesses really fast, which is why you need long passwords.)
 
 This also gives you a shortcut for comparing data files: Rather than checking byte by byte, you can calculate the hash of both, and compare those.
-For example, I wrote a tiny Ruby script that went through all my MP3 files to look for duplicates.
-It read each file, calculated a hash for it, and used that as the key for a dictionary of file paths.
-If the hash was already in the dictionary, it printed out a message with that file path and the new one saying they were duplicates.
+
+For developers, the most familiar use of hashes is Git.
+It keeps hashes of files so it knows if they've changed, and each commit is identified by a hash of everything in it.
+
+As another example, I wrote https://gist.github.com/bluegraybox/228fc0ab333d2268f16e3b73c0cc2c36[a tiny Ruby script] to go through all my MP3 files to look for duplicates.
+It reads each file, calculates a hash for it, and keeps a look-up table of hashes to file paths.
+If the hash is already in the dictionary, it prints out a message with the old and new file paths.
+
+[source,ruby]
+----
+digests = {}
+Find.find( dir ) do |f|
+    if File.file?( f ) and File.size?( f ) then
+        d = MD5.file( f ).hexdigest
+        if digests[d] then
+            puts "Duplicates: #{digests[d]} and #{f}"
+        else
+            digests[d] = f
+        end
+    end
+end
+----
 
 == Digital Signatures
 
@@ -155,15 +187,15 @@ It's like a big book with every transaction ever written in it.
 The only reason it's anonymous "like cash" is that everyone is only identified by their public key.
 (And you can use multiple key pairs to muddy the waters a bit.)
 
-What's recorded in the ledger is not "Alice has 200 BTC" or "the owner of key 43b46ef2e6 has 200 BTC".
-It's more like "b05eaffdb5 transfered 5 BTC to 43b46ef2e6".
+What's recorded in the ledger is not "Alice has 200 BTC" or "the owner of key 43b46... has 200 BTC."
+It's more like "b05ea... transfered 5 BTC to 43b46..."
 The bitcoin you "have" is the sum of all the transfers to you.
 
 When you make a payment, you don't have a pool of money to pay it out of; you have a bunch of individual transactions.
 So you have to say something like "take that 5 BTC from transaction 13a16e415d and give it to 72fc388ab6."
 
 When you "spend" a transaction like that, you have to spend all of it, but you can split it up and pay some of it back to yourself.
-"From transaction 13a16e415d and give 2 BTC to 72fc388ab6 and 3 BTC to 43b46ef2e6."
+"From transaction 13a16e415d give 2 BTC to 72fc388ab6 and 3 BTC to 43b46...."
 
 image:img/transactions-1.png[split payment]
 
@@ -172,7 +204,13 @@ You can take a bunch of little payments you've received, combine them into one b
 
 image:img/transactions-2.png[many-to-many]
 
-A Transaction, as it's stored in the bitcoin system, is a set of inputs and outputs - payments from and to.
+Or just collect them all into a single transaction.
+
+image:img/transactions-3.png[condense]
+
+=== Validation
+
+A Transaction, as it's stored in the blockchain, is a set of inputs and outputs - payments from and to.
 Every input is the output from another transaction.
 
 So how is this enforced? What stops you from pretending to be someone else and using their transactions?
@@ -183,7 +221,7 @@ The script checks that the public key is the one expected, uses that public key 
 That proves that the claimant has the private key matching the pubic key required.
 The process is:
 
-image:img/transactions-3.png[verify]
+image:img/verification.png[verify]
 
 In pseudocode, that's:
 
@@ -192,20 +230,52 @@ In pseudocode, that's:
             decrypt(signature, publicKey) == hash(inputTransactionBytes())
     }
 
-And the actual scripting langauge looks like this:
+Here's a full example transaction from the https://en.bitcoin.it/wiki/Transaction#Principle_example_of_a_Bitcoin_transaction_with_1_input_and_1_output_only[Bitcoin wiki].
+----
+Input:
+Previous tx: f5d8ee39a430901c91a5917b9f2dc19d6d1a0e9cea205b009ca73dd04470b9a6
+Index: 0
+scriptSig: 304502206e21798a42fae0e854281abd38bacd1aeed3ee3738d9e1446618c4571d10
+90db022100e2ac980643b0b82c0e88ffdfec6b64e3e6ba35e7ba5fdd7d5d6cc8d25c6b241501
 
-    OP_DUP OP_HASH160 43b46ef2e61a3d6a725fe70fe2b3adaadbca7348 OP_EQUALVERIFY OP_CHECKSIG
+Output:
+Value: 5000000000
+scriptPubKey: OP_DUP OP_HASH160 404371705fa9bd789a2fcd52d2c580b65d35549d
+OP_EQUALVERIFY OP_CHECKSIG
+----
 
-(The script actually includes a hash of the public key, not the full key, which is safer and more compact.)
+That's the scripting language at the bottom. It actually includes a hash of the public key, not the full key, which is more anonymous and more compact.
+"scriptSig" is the signature and public key that will be fed into the script for the input ("Previous tx").
+Also note that the input doesn't have an amount - that comes from previous transaction. ("Index" says which output we're claiming.)
 
 So a chain of transactions could look like:
 
 image:img/transaction.png[transactions]
 
-Ok, fine, so we have all these transactions with their inputs and outputs and little scripts.
-Who actually verifies them, and how do we keep someone from fiddling with the numbers?
+Ok, fine, so I can create a new transaction that takes Bitcoin that was transfered to me and transfers it to someone else.
+And we've got a mechanism so that someone can verify that I'm allowed to do that.
+But they need to be able to look up that input transaction.
+
+But there's still the question of who does that verification.
+And even if they can prove that this transaction is valid, how do they know there's not already another transaction that uses that input?
+
+
+For that person to be able to spend it, other people have to be able to verify that transaction.
+It only works if we're all using the same big ledger book.
+We have all these transactions with their inputs and outputs and little scripts.
+How do we keep track of them, and how can we be sure that nobody's fiddled the numbers?
 
 == Blockchain
+
+That question brings us to the actual blockchain.
+It's essentially a distributed database of transactions.
+Everyone who uses the Blockchain has a copy of it.
+If you want to make a change to it, you have to tell everyone else.
+
+Of course, the problem is that everyone is trying to add transactions to it at the same time.
+  but the way you add new transactions is interesting.
+
+First off, it's _distributed_, so you have to tell everyone else about any changes you make.
 
 image:img/blockchain.png[blockchain]
 

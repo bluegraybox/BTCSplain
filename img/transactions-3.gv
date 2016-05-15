@@ -16,12 +16,11 @@ digraph G {
         # arrowsize=2,
         color="#9999ff",
     ];
-    "hash!" [color=red, fontcolor=red]
-    "decrypt(public)" [color=red, fontcolor=red]
+    "transaction!" [color=red, fontcolor=red]
 
-    transaction -> "hash!"
-    "hash!" -> "expected?"
+    "3 BTC to Alice" -> "transaction!"
+    "1 BTC to Alice" -> "transaction!"
+    "4 BTC to Alice" -> "transaction!"
 
-    signature -> "decrypt(public)"
-    "decrypt(public)" -> "expected?"
+    "transaction!" -> "8 BTC to Alice"
 }
