@@ -281,7 +281,40 @@ image:img/blockchain.png[blockchain]
 
 == Proof of Work
 
-Bitcoin only.
+So far, there's no reason the blockchain couldn't be a centralized database.
+All transactions get sent to it, it validates them and adds them to the blockchain.
+Simple.
+
+But the entire point of Bitcoin is to avoid that central authority, that centralized trust.
+Everyone has their own copy of the database.
+Everyone can validate a block of transactions and send it out to the rest of the network to add to their chains.
+But the chain needs to be consistent. Everyone needs to agree on what transactions have happened.
+With thousands of people trying to add new blocks to the chain all the time, how do you decide which one to add?
+You could choose one at random, but how do you do that if nobody is in charge to do the choosing?
+
+The solution to this problem is what makes Bitcoin Bitcoin, and it's really simple and elegant.
+The transaction block consists of all of its transactions plus some metadata.
+If you calculate its hash, you'll get an essentially random number.
+Remember that's a property of cryptographic hashes, that you can't predict the output, and thus you can't manipulate the input in any predictable way to generate a particular output.
+
+When you look at that random output as a binary number, there's a 50% chance that the first bit will be zero.
+There's a 25% chance that the first two bits will be zero, and so on.
+By the time you get to 40 bits, you're talking about one in trillion.
+
+So what Bitcoin does is add a nonsense field, a filler field, to the transaction block.
+It has no effect except to change the hash value of the block.
+
+Bitcoin then requires that any transaction block hashes to a value with at least a certain number of leading zeros.
+To find a filler value that will make the block validate is a matter of brute force guesswork:
+Set a new random number, calculate the hash, see if it matches, try again.
+Given the total compute power of the network, you can figure out how long it would take to find a hash with a certain number of leading zeros.
+The bitcoin software actually adjusts the number of leading zeros required so that the time required to find a valid block remains fairly constant, at around ten minutes.
+
+A nice thing about this is that nobody has to agree in advance what the block of transactions is.
+(Since it's a distributed network, everyone will receive transactions in a slightly different order.)
+Everyone can work on validating their own block, and whoever generates a valid block first broadcasts it.
+Everyone else checks that it's valid and adds it to their chain.
+They stop work on their block, discard any transactions that were added in the new block, and start building a new block.
 
 image:img/proof_of_work.png[proof of work]
 

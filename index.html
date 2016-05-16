@@ -836,7 +836,46 @@ If you want to make a change to it, you have to tell everyone else.</p>
 <h2 id="_proof_of_work">Proof of Work</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Bitcoin only.</p>
+<p>So far, there&#8217;s no reason the blockchain couldn&#8217;t be a centralized database.
+All transactions get sent to it, it validates them and adds them to the blockchain.
+Simple.</p>
+</div>
+<div class="paragraph">
+<p>But the entire point of Bitcoin is to avoid that central authority, that centralized trust.
+Everyone has their own copy of the database.
+Everyone can validate a block of transactions and send it out to the rest of the network to add to their chains.
+But the chain needs to be consistent. Everyone needs to agree on what transactions have happened.
+With thousands of people trying to add new blocks to the chain all the time, how do you decide which one to add?
+You could choose one at random, but how do you do that if nobody is in charge to do the choosing?</p>
+</div>
+<div class="paragraph">
+<p>The solution to this problem is what makes Bitcoin Bitcoin, and it&#8217;s really simple and elegant.
+The transaction block consists of all of its transactions plus some metadata.
+If you calculate its hash, you&#8217;ll get an essentially random number.
+Remember that&#8217;s a property of cryptographic hashes, that you can&#8217;t predict the output, and thus you can&#8217;t manipulate the input in any predictable way to generate a particular output.</p>
+</div>
+<div class="paragraph">
+<p>When you look at that random output as a binary number, there&#8217;s a 50% chance that the first bit will be zero.
+There&#8217;s a 25% chance that the first two bits will be zero, and so on.
+By the time you get to 40 bits, you&#8217;re talking about one in trillion.</p>
+</div>
+<div class="paragraph">
+<p>So what Bitcoin does is add a nonsense field, a filler field, to the transaction block.
+It has no effect except to change the hash value of the block.</p>
+</div>
+<div class="paragraph">
+<p>Bitcoin then requires that any transaction block hashes to a value with at least a certain number of leading zeros.
+To find a filler value that will make the block validate is a matter of brute force guesswork:
+Set a new random number, calculate the hash, see if it matches, try again.
+Given the total compute power of the network, you can figure out how long it would take to find a hash with a certain number of leading zeros.
+The bitcoin software actually adjusts the number of leading zeros required so that the time required to find a valid block remains fairly constant, at around ten minutes.</p>
+</div>
+<div class="paragraph">
+<p>A nice thing about this is that nobody has to agree in advance what the block of transactions is.
+(Since it&#8217;s a distributed network, everyone will receive transactions in a slightly different order.)
+Everyone can work on validating their own block, and whoever generates a valid block first broadcasts it.
+Everyone else checks that it&#8217;s valid and adds it to their chain.
+They stop work on their block, discard any transactions that were added in the new block, and start building a new block.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="img/proof_of_work.png" alt="proof of work"></span></p>
@@ -852,7 +891,7 @@ If you want to make a change to it, you have to tell everyone else.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-15 11:04:05 EDT
+Last updated 2016-05-16 11:07:16 EDT
 </div>
 </div>
 </body>
