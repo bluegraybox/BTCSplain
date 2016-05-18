@@ -16,7 +16,7 @@ digraph G {
         # arrowsize=2,
         color="#9999ff",
     ];
-    "transaction!" [color=red, fontcolor=red]
+    "transaction!" [color="#ee8800", fontcolor="#ee8800"]
 
     "3 BTC to Alice" -> "transaction!"
     "1 BTC to Alice" -> "transaction!"

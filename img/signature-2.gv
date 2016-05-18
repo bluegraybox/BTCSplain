@@ -16,8 +16,8 @@ digraph G {
         # arrowsize=2,
         color="#9999ff",
     ];
-    "hash!" [color=red, fontcolor=red]
-    "decrypt(public)!" [color=red, fontcolor=red]
+    "hash!" [color="#ee8800", fontcolor="#ee8800"]
+    "decrypt(public)!" [color="#ee8800", fontcolor="#ee8800"]
 
     signature -> "decrypt(public)!"
     "decrypt(public)!" -> hash1

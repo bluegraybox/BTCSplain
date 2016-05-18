@@ -192,10 +192,10 @@ It's more like "b05ea... transfered 5 BTC to 43b46..."
 The bitcoin you "have" is the sum of all the transfers to you.
 
 When you make a payment, you don't have a pool of money to pay it out of; you have a bunch of individual transactions.
-So you have to say something like "take that 5 BTC from transaction 13a16e415d and give it to 72fc388ab6."
+So you have to say something like "take that 5 BTC from transaction 13a16... and give it to 72fc3...."
 
 When you "spend" a transaction like that, you have to spend all of it, but you can split it up and pay some of it back to yourself.
-"From transaction 13a16e415d give 2 BTC to 72fc388ab6 and 3 BTC to 43b46...."
+"From transaction 13a16... give 2 BTC to 72fc3... and 3 BTC to 43b46...."
 
 image:img/transactions-1.png[split payment]
 
@@ -218,7 +218,7 @@ So how is this enforced? What stops you from pretending to be someone else and u
 The transaction output doesn't just have a public key; it has a little executable script that is used to verify any claims to it.
 The script takes a public key and a signature of its own transaction as inputs - that's what you have to provide to claim it.
 The script checks that the public key is the one expected, uses that public key to decrypt the signature provided, and compares that to the hash of its own transaction.
-That proves that the claimant has the private key matching the pubic key required.
+That proves that the claimant has the private key matching the public key required.
 The process is:
 
 image:img/verification.png[verify]
