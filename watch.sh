@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 
 if [ ! `which asciidoctor` ] ; then
     echo "Asciidoctor not installed"

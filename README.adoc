@@ -178,23 +178,21 @@ image:img/signature-2.png[verify signature]
 == Transactions
 
 Ok, now we're getting into the actual bitcoin and blockchain part of this.
-It gets a little weird and complicated, so we're going to inch our way toward the truth.
 
 When we talk about bitcoin payments, we imagine that it's like exchanging cash, and a lot of the hype around bitcoin reinforces this.
 But that's actually a really misleading metaphor.
-The blockchain is a shared ledger.
-It's like a big book with every transaction ever written in it.
-The only reason it's anonymous "like cash" is that everyone is only identified by their public key.
-(And you can use multiple key pairs to muddy the waters a bit.)
+The blockchain is like a big account book with every transaction ever written in it.
+The only reason it's anonymous is that everyone is only identified by their public key.
+(And any one person can use multiple keys to muddy the waters.)
 
-What's recorded in the ledger is not "Alice has 200 BTC" or "the owner of key 43b46... has 200 BTC."
-It's more like "b05ea... transfered 5 BTC to 43b46..."
-The bitcoin you "have" is the sum of all the transfers to you.
+With other financial accounts, like checking or credit, you have a balance, and transactions modify that balance.
+Bitcoin doesn't store a balance: it has to be calculated by summing up all the payments to you that you haven't spent.
 
-When you make a payment, you don't have a pool of money to pay it out of; you have a bunch of individual transactions.
-So you have to say something like "take that 5 BTC from transaction 13a16... and give it to 72fc3...."
+So when you make a payment, you don't have a pool of money to pay it out of; you have a bunch of individual transactions.
+You have to say something like "take that 5 BTC from transaction 13a16... and give it to 72fc3...."
 
-When you "spend" a transaction like that, you have to spend all of it, but you can split it up and pay some of it back to yourself.
+For reasons we'll get into later, you can't spend part of a transaction. It all has to go somewhere.
+What you can do is split it up and pay some of it back to yourself.
 "From transaction 13a16... give 2 BTC to 72fc3... and 3 BTC to 43b46...."
 
 image:img/transactions-1.png[split payment]
@@ -210,10 +208,11 @@ image:img/transactions-3.png[condense]
 
 === Validation
 
-A Transaction, as it's stored in the blockchain, is a set of inputs and outputs - payments from and to.
-Every input is the output from another transaction.
+A Transaction, as it's recorded in the blockchain, is a set of inputs and outputs - payments from and to.
+Every input is the output from a previous transaction.
+You take payments that were made to you, and use them to pay someone else.
 
-So how is this enforced? What stops you from pretending to be someone else and using their transactions?
+So how is ownership enforced? What stops you from pretending to be someone else?
 
 The transaction output doesn't just have a public key; it has a little executable script that is used to verify any claims to it.
 The script takes a public key and a signature of its own transaction as inputs - that's what you have to provide to claim it.
@@ -246,69 +245,66 @@ OP_EQUALVERIFY OP_CHECKSIG
 
 That's the scripting language at the bottom. It actually includes a hash of the public key, not the full key, which is more anonymous and more compact.
 "scriptSig" is the signature and public key that will be fed into the script for the input ("Previous tx").
-Also note that the input doesn't have an amount - that comes from previous transaction. ("Index" says which output we're claiming.)
+Also note that the input section doesn't have an amount - that comes from the previous transaction.
+("Index" says which output we're claiming.)
 
 So a chain of transactions could look like:
 
 image:img/transaction.png[transactions]
 
-Ok, fine, so I can create a new transaction that takes Bitcoin that was transfered to me and transfers it to someone else.
-And we've got a mechanism so that someone can verify that I'm allowed to do that.
-But they need to be able to look up that input transaction.
-
-But there's still the question of who does that verification.
-And even if they can prove that this transaction is valid, how do they know there's not already another transaction that uses that input?
-
-
-For that person to be able to spend it, other people have to be able to verify that transaction.
-It only works if we're all using the same big ledger book.
-We have all these transactions with their inputs and outputs and little scripts.
-How do we keep track of them, and how can we be sure that nobody's fiddled the numbers?
+Ok, so I can create a new transaction that takes Bitcoin from previous transactions and transfers it to someone else.
+And we've got a mechanism that lets someone verify that I'm allowed to do that.
+But part of that verification requires that they can look up the input transactions and know that they're valid.
+Which means that all of _their_ inputs have to have been validated.
+And so on and so on.
+How do we store that transaction history and not have to validate the whole chain of previous transactions?
 
 == Blockchain
 
-That question brings us to the actual blockchain.
-It's essentially a distributed database of transactions.
-Everyone who uses the Blockchain has a copy of it.
-If you want to make a change to it, you have to tell everyone else.
-
-Of course, the problem is that everyone is trying to add transactions to it at the same time.
-  but the way you add new transactions is interesting.
-
-First off, it's _distributed_, so you have to tell everyone else about any changes you make.
+That brings us to the actual blockchain.
+Rather than validating and storing each transaction individually, they're grouped into blocks, along with header data which includes hashes of its own transactions and of the previous block's header.
+Modifying an earlier block would change its hash, making any tampering evident.
 
 image:img/blockchain.png[blockchain]
+
+As new transactions are added, it also updates an index (like a database index).
+This allow verifiers to quickly look up individual transactions.
+By removing transactions from the index when their outputs are all spent, it solves another problem: double-spending.
+If I have an input that gives me 2 BTC, I can create two new transactions that transfer it to different people.
+Each of those looks valid on its own, but we can't allow both of them.
+If they're in the same block, it's easy to catch, but we also need to be able to check against historical transactions.
 
 == Proof of Work
 
 So far, there's no reason the blockchain couldn't be a centralized database.
 All transactions get sent to it, it validates them and adds them to the blockchain.
 Simple.
+And for some of the use cases people talk about, they could totally do that.
 
-But the entire point of Bitcoin is to avoid that central authority, that centralized trust.
+But the entire point of Bitcoin is to avoid that central authority.
 Everyone has their own copy of the database.
 Everyone can validate a block of transactions and send it out to the rest of the network to add to their chains.
-But the chain needs to be consistent. Everyone needs to agree on what transactions have happened.
+But the chain needs to be consistent.
+ Everyone needs to agree on what transactions have happened.
 With thousands of people trying to add new blocks to the chain all the time, how do you decide which one to add?
+(This is another reason transactions are validated in blocks, rather than individually.)
 You could choose one at random, but how do you do that if nobody is in charge to do the choosing?
-
 The solution to this problem is what makes Bitcoin Bitcoin, and it's really simple and elegant.
-The transaction block consists of all of its transactions plus some metadata.
-If you calculate its hash, you'll get an essentially random number.
-Remember that's a property of cryptographic hashes, that you can't predict the output, and thus you can't manipulate the input in any predictable way to generate a particular output.
 
-When you look at that random output as a binary number, there's a 50% chance that the first bit will be zero.
-There's a 25% chance that the first two bits will be zero, and so on.
-By the time you get to 40 bits, you're talking about one in trillion.
+If you calculate the hash for a transaction block, you'll get a number that's effectively random.
+When you look at that random output as a binary number, there's a 50% chance that the first bit will be zero, a 25% chance that the first two bits will be zero, and so on.
+By the time you get to 40 bits, you're talking about one in a trillion.
 
-So what Bitcoin does is add a nonsense field, a filler field, to the transaction block.
+So what Bitcoin does is add a Nonce field, a sort of filler, to the transaction block.
 It has no effect except to change the hash value of the block.
+For the block itself to be valid, its hash has to have at least a certain number of leading zeros.
 
-Bitcoin then requires that any transaction block hashes to a value with at least a certain number of leading zeros.
 To find a filler value that will make the block validate is a matter of brute force guesswork:
 Set a new random number, calculate the hash, see if it matches, try again.
-Given the total compute power of the network, you can figure out how long it would take to find a hash with a certain number of leading zeros.
+Given the total compute power of the network, you can estimate how long it would take to find a hash with a certain number of leading zeros.
 The bitcoin software actually adjusts the number of leading zeros required so that the time required to find a valid block remains fairly constant, at around ten minutes.
+
+image:img/proof_of_work.png[proof of work]
 
 A nice thing about this is that nobody has to agree in advance what the block of transactions is.
 (Since it's a distributed network, everyone will receive transactions in a slightly different order.)
@@ -316,6 +312,52 @@ Everyone can work on validating their own block, and whoever generates a valid b
 Everyone else checks that it's valid and adds it to their chain.
 They stop work on their block, discard any transactions that were added in the new block, and start building a new block.
 
-image:img/proof_of_work.png[proof of work]
-
 == Smart Contracts
+
+A while back, you may have been wondering why transaction outputs include this complicated validation script, rather than just a public key.
+What using a script lets you do is define other conditions for validating the transaction.
+
+In a simple example, the script could require two out of three signatures: a buyer, seller, and arbitrator.
+The seller can't claim the payment on their own.
+If the buyer is happy, they sign it.
+If not, the arbitrator can sign or not sign, depending on their judgement.
+The buyer and seller still need a real-world trust that the arbitrator is honest.
+
+If instead, it's a bet on the outcome of a sports game or the price of a stock, the arbitrator could be a program that uses web services to detect if the right conditions are met.
+That's more efficient, but again, the participants are trusting that program.
+
+Another example is a Kickstarter-style fundraiser.
+Create a transaction that pays you 100 BTC, and allow anyone to add inputs to it.
+Until they add up to 100 BTC, the transaction won't validate and you won't be able to spend it.
+Once they do, you will.
+
+In theory, you could also have transactions that are only valid after a certain date, but this capability was disabled in Bitcoin due to concerns about Denial-of-Service attacks.
+It may well be workable in a private blockchain network, among trusted parties.
+This would allow escrow transactions and returnable deposits.
+
+There's an inherent limitation of Smart Contracts: The only way to mathematically guarantee that money can be paid in the future is to lock it up now.
+Any transaction that pays someone in the future takes the money away from you today.
+They won't be able to spend it until the time limit is up, but you won't either.
+If you wanted your rent for the next year to be paid automatically every month with a Smart Contract, you'd effectively have to pay the full year up front.
+
+== Problems
+
+Key management
+    hard drive crashes
+    stolen keys
+
+Ooops
+    typos
+    contested charges - fewer, but harder to resolve
+
+Bitcoin
+    throughput
+    storage
+
+== Potential
+
+"value" could be anything: title to car or house, any property
+
+distributed transaction network
+    We're starting to realize that all data storage is distributed, and has the problems of distributed systems.
+    What we have now are systems that pretend to be authoritative systems of record, and just have elaborate backup, fail-over, and conflict resolution mechanisms.

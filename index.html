@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="generator" content="Asciidoctor 1.5.3">
 <title>Bitcoin &amp; Blockchain, 'Splain&#8217;d</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
-/* Remove the comments around the @import statement below when using this as a custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";*/
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
@@ -57,7 +57,6 @@ a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
 img{-ms-interpolation-mode:bicubic}
-#map_canvas img,#map_canvas embed,#map_canvas object,.map_canvas img,.map_canvas embed,.map_canvas object{max-width:none!important}
 .left{float:left!important}
 .right{float:right!important}
 .text-left{text-align:left!important}
@@ -65,10 +64,12 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
-.antialiased,body{-webkit-font-smoothing:antialiased}
-img{display:inline-block;vertical-align:middle}
+body{-webkit-font-smoothing:antialiased}
+img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
 p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
 .subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
 div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
@@ -111,12 +112,14 @@ blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
 h1{font-size:2.75em}
 h2{font-size:2.3125em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
-h4{font-size:1.4375em}}table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
 table thead,table tfoot{background:#f7f8f7;font-weight:bold}
 table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
@@ -124,7 +127,7 @@ h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title str
 *:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
 .keyseq{color:rgba(51,51,51,.8)}
-kbd{display:inline-block;color:rgba(0,0,0,.8);font-size:.75em;line-height:1.4;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:-.15em .15em 0 .15em;padding:.2em .6em .2em .5em;vertical-align:middle;white-space:nowrap}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
 .keyseq kbd:last-child{margin-right:0}
 .menuseq,.menu{color:rgba(0,0,0,.8)}
@@ -155,29 +158,33 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toc ul.sectlevel0>li>a{font-style:italic}
 #toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
 #toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
 #toc a{text-decoration:none}
 #toc a:active{text-decoration:underline}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media only screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
 #toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
-#toc.toc2 #toctitle{margin-top:0;font-size:1.2em}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
 #toc.toc2 ul ul{margin-left:0;padding-left:1em}
 #toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
 body.toc2.toc-right{padding-left:0;padding-right:15em}
-body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
 #toc.toc2{width:20em}
 #toc.toc2 #toctitle{font-size:1.375em}
 #toc.toc2>ul{font-size:.95em}
 #toc.toc2 ul ul{padding-left:1.25em}
-body.toc2.toc-right{padding-left:0;padding-right:20em}}#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
 #content #toc>:first-child{margin-top:0}
 #content #toc>:last-child{margin-bottom:0}
 #footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
 #footer-text{color:rgba(255,255,255,.8);line-height:1.44}
 .sect1{padding-bottom:.625em}
-@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}.sect1+.sect1{border-top:1px solid #efefed}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
 #content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
 #content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
 #content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
@@ -206,7 +213,9 @@ table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inh
 .sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
 .literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
 .literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
-@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
 .listingblock pre.highlightjs{padding:0}
 .listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
 .listingblock pre.prettyprint{border-width:0}
@@ -216,7 +225,7 @@ table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inh
 .listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
 .listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
 table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
-table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
 table.pyhltable td.code{padding-left:.75em;padding-right:0}
 pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
 pre.pygments .lineno{display:inline-block;margin-right:.25em}
@@ -237,13 +246,12 @@ table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
 .verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
 .quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
 .quoteblock .attribution br,.verseblock .attribution br{display:none}
-.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.05em;color:rgba(0,0,0,.6)}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
 .quoteblock.abstract{margin:0 0 1.25em 0;display:block}
 .quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
 .quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
 table.tableblock{max-width:100%;border-collapse:separate}
 table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
-table.spread{width:100%}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
 table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
 table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
@@ -289,8 +297,8 @@ ol.upperroman{list-style-type:upper-roman}
 ol.lowergreek{list-style-type:lower-greek}
 .hdlist>table,.colist>table{border:0;background:none}
 .hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
-td.hdlist1{padding-right:.75em;font-weight:bold}
-td.hdlist1,td.hdlist2{vertical-align:top}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
 .literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
 .colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
 .colist>table tr>td:last-of-type{padding:.25em 0}
@@ -303,13 +311,14 @@ td.hdlist1,td.hdlist2{vertical-align:top}
 .image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
 .image.left{margin-right:.625em}
 .image.right{margin-left:.625em}
-a.image{text-decoration:none}
-span.footnote,span.footnoteref{vertical-align:super;font-size:.875em}
-span.footnote a,span.footnoteref a{text-decoration:none}
-span.footnote a:active,span.footnoteref a:active{text-decoration:underline}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
-#footnotes .footnote{padding:0 .375em;line-height:1.3;font-size:.875em;margin-left:1.2em;text-indent:-1.2em;margin-bottom:.2em}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
 #footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
 #footnotes .footnote:last-of-type{margin-bottom:0}
 #content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
@@ -367,11 +376,10 @@ span.icon>.fa{cursor:default}
 pre .conum[data-value]{position:relative;top:-.125em}
 b.conum *{color:inherit!important}
 .conum:not([data-value]):empty{display:none}
-h1,h2{letter-spacing:-.01em}
-dt,th.tableblock,td.content{text-rendering:optimizeLegibility}
-p,td.content{letter-spacing:-.01em}
-p strong,td.content strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content{font-size:1.0625rem}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
@@ -382,9 +390,9 @@ a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
 a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
 abbr[title]:after{content:" (" attr(title) ")"}
-pre,blockquote,tr,img{page-break-inside:avoid}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
 thead{display:table-header-group}
-img{max-width:100%!important}
+svg{max-width:100%}
 p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
 h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
 #toc,.sidebarblock,.exampleblock>.content{background:none!important}
@@ -434,6 +442,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_blockchain">Blockchain</a></li>
 <li><a href="#_proof_of_work">Proof of Work</a></li>
 <li><a href="#_smart_contracts">Smart Contracts</a></li>
+<li><a href="#_problems">Problems</a></li>
+<li><a href="#_potential">Potential</a></li>
 </ul>
 </div>
 <div class="paragraph">
@@ -687,28 +697,26 @@ The document is readable, but anyone can verify the signature by decrypting it w
 <h2 id="_transactions">Transactions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ok, now we&#8217;re getting into the actual bitcoin and blockchain part of this.
-It gets a little weird and complicated, so we&#8217;re going to inch our way toward the truth.</p>
+<p>Ok, now we&#8217;re getting into the actual bitcoin and blockchain part of this.</p>
 </div>
 <div class="paragraph">
 <p>When we talk about bitcoin payments, we imagine that it&#8217;s like exchanging cash, and a lot of the hype around bitcoin reinforces this.
 But that&#8217;s actually a really misleading metaphor.
-The blockchain is a shared ledger.
-It&#8217;s like a big book with every transaction ever written in it.
-The only reason it&#8217;s anonymous "like cash" is that everyone is only identified by their public key.
-(And you can use multiple key pairs to muddy the waters a bit.)</p>
+The blockchain is like a big account book with every transaction ever written in it.
+The only reason it&#8217;s anonymous is that everyone is only identified by their public key.
+(And any one person can use multiple keys to muddy the waters.)</p>
 </div>
 <div class="paragraph">
-<p>What&#8217;s recorded in the ledger is not "Alice has 200 BTC" or "the owner of key 43b46&#8230;&#8203; has 200 BTC."
-It&#8217;s more like "b05ea&#8230;&#8203; transfered 5 BTC to 43b46&#8230;&#8203;"
-The bitcoin you "have" is the sum of all the transfers to you.</p>
+<p>With other financial accounts, like checking or credit, you have a balance, and transactions modify that balance.
+Bitcoin doesn&#8217;t store a balance: it has to be calculated by summing up all the payments to you that you haven&#8217;t spent.</p>
 </div>
 <div class="paragraph">
-<p>When you make a payment, you don&#8217;t have a pool of money to pay it out of; you have a bunch of individual transactions.
-So you have to say something like "take that 5 BTC from transaction 13a16&#8230;&#8203; and give it to 72fc3&#8230;&#8203;."</p>
+<p>So when you make a payment, you don&#8217;t have a pool of money to pay it out of; you have a bunch of individual transactions.
+You have to say something like "take that 5 BTC from transaction 13a16&#8230;&#8203; and give it to 72fc3&#8230;&#8203;."</p>
 </div>
 <div class="paragraph">
-<p>When you "spend" a transaction like that, you have to spend all of it, but you can split it up and pay some of it back to yourself.
+<p>For reasons we&#8217;ll get into later, you can&#8217;t spend part of a transaction. It all has to go somewhere.
+What you can do is split it up and pay some of it back to yourself.
 "From transaction 13a16&#8230;&#8203; give 2 BTC to 72fc3&#8230;&#8203; and 3 BTC to 43b46&#8230;&#8203;."</p>
 </div>
 <div class="paragraph">
@@ -730,11 +738,12 @@ You can take a bunch of little payments you&#8217;ve received, combine them into
 <div class="sect2">
 <h3 id="_validation">Validation</h3>
 <div class="paragraph">
-<p>A Transaction, as it&#8217;s stored in the blockchain, is a set of inputs and outputs - payments from and to.
-Every input is the output from another transaction.</p>
+<p>A Transaction, as it&#8217;s recorded in the blockchain, is a set of inputs and outputs - payments from and to.
+Every input is the output from a previous transaction.
+You take payments that were made to you, and use them to pay someone else.</p>
 </div>
 <div class="paragraph">
-<p>So how is this enforced? What stops you from pretending to be someone else and using their transactions?</p>
+<p>So how is ownership enforced? What stops you from pretending to be someone else?</p>
 </div>
 <div class="paragraph">
 <p>The transaction output doesn&#8217;t just have a public key; it has a little executable script that is used to verify any claims to it.
@@ -777,7 +786,8 @@ OP_EQUALVERIFY OP_CHECKSIG</pre>
 <div class="paragraph">
 <p>That&#8217;s the scripting language at the bottom. It actually includes a hash of the public key, not the full key, which is more anonymous and more compact.
 "scriptSig" is the signature and public key that will be fed into the script for the input ("Previous tx").
-Also note that the input doesn&#8217;t have an amount - that comes from previous transaction. ("Index" says which output we&#8217;re claiming.)</p>
+Also note that the input section doesn&#8217;t have an amount - that comes from the previous transaction.
+("Index" says which output we&#8217;re claiming.)</p>
 </div>
 <div class="paragraph">
 <p>So a chain of transactions could look like:</p>
@@ -786,19 +796,12 @@ Also note that the input doesn&#8217;t have an amount - that comes from previous
 <p><span class="image"><img src="img/transaction.png" alt="transactions"></span></p>
 </div>
 <div class="paragraph">
-<p>Ok, fine, so I can create a new transaction that takes Bitcoin that was transfered to me and transfers it to someone else.
-And we&#8217;ve got a mechanism so that someone can verify that I&#8217;m allowed to do that.
-But they need to be able to look up that input transaction.</p>
-</div>
-<div class="paragraph">
-<p>But there&#8217;s still the question of who does that verification.
-And even if they can prove that this transaction is valid, how do they know there&#8217;s not already another transaction that uses that input?</p>
-</div>
-<div class="paragraph">
-<p>For that person to be able to spend it, other people have to be able to verify that transaction.
-It only works if we&#8217;re all using the same big ledger book.
-We have all these transactions with their inputs and outputs and little scripts.
-How do we keep track of them, and how can we be sure that nobody&#8217;s fiddled the numbers?</p>
+<p>Ok, so I can create a new transaction that takes Bitcoin from previous transactions and transfers it to someone else.
+And we&#8217;ve got a mechanism that lets someone verify that I&#8217;m allowed to do that.
+But part of that verification requires that they can look up the input transactions and know that they&#8217;re valid.
+Which means that all of <em>their</em> inputs have to have been validated.
+And so on and so on.
+How do we store that transaction history and not have to validate the whole chain of previous transactions?</p>
 </div>
 </div>
 </div>
@@ -807,20 +810,20 @@ How do we keep track of them, and how can we be sure that nobody&#8217;s fiddled
 <h2 id="_blockchain">Blockchain</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>That question brings us to the actual blockchain.
-It&#8217;s essentially a distributed database of transactions.
-Everyone who uses the Blockchain has a copy of it.
-If you want to make a change to it, you have to tell everyone else.</p>
-</div>
-<div class="paragraph">
-<p>Of course, the problem is that everyone is trying to add transactions to it at the same time.
-  but the way you add new transactions is interesting.</p>
-</div>
-<div class="paragraph">
-<p>First off, it&#8217;s <em>distributed</em>, so you have to tell everyone else about any changes you make.</p>
+<p>That brings us to the actual blockchain.
+Rather than validating and storing each transaction individually, they&#8217;re grouped into blocks, along with header data which includes hashes of its own transactions and of the previous block&#8217;s header.
+Modifying an earlier block would change its hash, making any tampering evident.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="img/blockchain.png" alt="blockchain"></span></p>
+</div>
+<div class="paragraph">
+<p>As new transactions are added, it also updates an index (like a database index).
+This allow verifiers to quickly look up individual transactions.
+By removing transactions from the index when their outputs are all spent, it solves another problem: double-spending.
+If I have an input that gives me 2 BTC, I can create two new transactions that transfer it to different people.
+Each of those looks valid on its own, but we can&#8217;t allow both of them.
+If they&#8217;re in the same block, it&#8217;s easy to catch, but we also need to be able to check against historical transactions.</p>
 </div>
 </div>
 </div>
@@ -830,37 +833,38 @@ If you want to make a change to it, you have to tell everyone else.</p>
 <div class="paragraph">
 <p>So far, there&#8217;s no reason the blockchain couldn&#8217;t be a centralized database.
 All transactions get sent to it, it validates them and adds them to the blockchain.
-Simple.</p>
+Simple.
+And for some of the use cases people talk about, they could totally do that.</p>
 </div>
 <div class="paragraph">
-<p>But the entire point of Bitcoin is to avoid that central authority, that centralized trust.
+<p>But the entire point of Bitcoin is to avoid that central authority.
 Everyone has their own copy of the database.
 Everyone can validate a block of transactions and send it out to the rest of the network to add to their chains.
-But the chain needs to be consistent. Everyone needs to agree on what transactions have happened.
+But the chain needs to be consistent.
+ Everyone needs to agree on what transactions have happened.
 With thousands of people trying to add new blocks to the chain all the time, how do you decide which one to add?
-You could choose one at random, but how do you do that if nobody is in charge to do the choosing?</p>
+(This is another reason transactions are validated in blocks, rather than individually.)
+You could choose one at random, but how do you do that if nobody is in charge to do the choosing?
+The solution to this problem is what makes Bitcoin Bitcoin, and it&#8217;s really simple and elegant.</p>
 </div>
 <div class="paragraph">
-<p>The solution to this problem is what makes Bitcoin Bitcoin, and it&#8217;s really simple and elegant.
-The transaction block consists of all of its transactions plus some metadata.
-If you calculate its hash, you&#8217;ll get an essentially random number.
-Remember that&#8217;s a property of cryptographic hashes, that you can&#8217;t predict the output, and thus you can&#8217;t manipulate the input in any predictable way to generate a particular output.</p>
+<p>If you calculate the hash for a transaction block, you&#8217;ll get a number that&#8217;s effectively random.
+When you look at that random output as a binary number, there&#8217;s a 50% chance that the first bit will be zero, a 25% chance that the first two bits will be zero, and so on.
+By the time you get to 40 bits, you&#8217;re talking about one in a trillion.</p>
 </div>
 <div class="paragraph">
-<p>When you look at that random output as a binary number, there&#8217;s a 50% chance that the first bit will be zero.
-There&#8217;s a 25% chance that the first two bits will be zero, and so on.
-By the time you get to 40 bits, you&#8217;re talking about one in trillion.</p>
+<p>So what Bitcoin does is add a Nonce field, a sort of filler, to the transaction block.
+It has no effect except to change the hash value of the block.
+For the block itself to be valid, its hash has to have at least a certain number of leading zeros.</p>
 </div>
 <div class="paragraph">
-<p>So what Bitcoin does is add a nonsense field, a filler field, to the transaction block.
-It has no effect except to change the hash value of the block.</p>
-</div>
-<div class="paragraph">
-<p>Bitcoin then requires that any transaction block hashes to a value with at least a certain number of leading zeros.
-To find a filler value that will make the block validate is a matter of brute force guesswork:
+<p>To find a filler value that will make the block validate is a matter of brute force guesswork:
 Set a new random number, calculate the hash, see if it matches, try again.
-Given the total compute power of the network, you can figure out how long it would take to find a hash with a certain number of leading zeros.
+Given the total compute power of the network, you can estimate how long it would take to find a hash with a certain number of leading zeros.
 The bitcoin software actually adjusts the number of leading zeros required so that the time required to find a valid block remains fairly constant, at around ten minutes.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/proof_of_work.png" alt="proof of work"></span></p>
 </div>
 <div class="paragraph">
 <p>A nice thing about this is that nobody has to agree in advance what the block of transactions is.
@@ -869,21 +873,82 @@ Everyone can work on validating their own block, and whoever generates a valid b
 Everyone else checks that it&#8217;s valid and adds it to their chain.
 They stop work on their block, discard any transactions that were added in the new block, and start building a new block.</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="img/proof_of_work.png" alt="proof of work"></span></p>
-</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_smart_contracts">Smart Contracts</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>A while back, you may have been wondering why transaction outputs include this complicated validation script, rather than just a public key.
+What using a script lets you do is define other conditions for validating the transaction.</p>
+</div>
+<div class="paragraph">
+<p>In a simple example, the script could require two out of three signatures: a buyer, seller, and arbitrator.
+The seller can&#8217;t claim the payment on their own.
+If the buyer is happy, they sign it.
+If not, the arbitrator can sign or not sign, depending on their judgement.
+The buyer and seller still need a real-world trust that the arbitrator is honest.</p>
+</div>
+<div class="paragraph">
+<p>If instead, it&#8217;s a bet on the outcome of a sports game or the price of a stock, the arbitrator could be a program that uses web services to detect if the right conditions are met.
+That&#8217;s more efficient, but again, the participants are trusting that program.</p>
+</div>
+<div class="paragraph">
+<p>Another example is a Kickstarter-style fundraiser.
+Create a transaction that pays you 100 BTC, and allow anyone to add inputs to it.
+Until they add up to 100 BTC, the transaction won&#8217;t validate and you won&#8217;t be able to spend it.
+Once they do, you will.</p>
+</div>
+<div class="paragraph">
+<p>In theory, you could also have transactions that are only valid after a certain date, but this capability was disabled in Bitcoin due to concerns about Denial-of-Service attacks.
+It may well be workable in a private blockchain network, among trusted parties.
+This would allow escrow transactions and returnable deposits.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s an inherent limitation of Smart Contracts: The only way to mathematically guarantee that money can be paid in the future is to lock it up now.
+Any transaction that pays someone in the future takes the money away from you today.
+They won&#8217;t be able to spend it until the time limit is up, but you won&#8217;t either.
+If you wanted your rent for the next year to be paid automatically every month with a Smart Contract, you&#8217;d effectively have to pay the full year up front.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_problems">Problems</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Key management
+    hard drive crashes
+    stolen keys</p>
+</div>
+<div class="paragraph">
+<p>Ooops
+    typos
+    contested charges - fewer, but harder to resolve</p>
+</div>
+<div class="paragraph">
+<p>Bitcoin
+    throughput
+    storage</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_potential">Potential</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>"value" could be anything: title to car or house, any property</p>
+</div>
+<div class="paragraph">
+<p>distributed transaction network
+    We&#8217;re starting to realize that all data storage is distributed, and has the problems of distributed systems.
+    What we have now are systems that pretend to be authoritative systems of record, and just have elaborate backup, fail-over, and conflict resolution mechanisms.</p>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-17 18:06:16 EDT
+Last updated 2016-05-18 14:06:17 EDT
 </div>
 </div>
 </body>

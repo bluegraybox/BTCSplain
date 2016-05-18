@@ -16,11 +16,11 @@ digraph G {
         # arrowsize=2,
         color="#9999ff",
     ];
-    "transaction!" [color="#ee8800", fontcolor="#ee8800"]
+    transaction [color="#ee8800", fontcolor="#ee8800"]
 
-    "3 BTC to Alice" -> "transaction!"
-    "1 BTC to Alice" -> "transaction!"
-    "4 BTC to Alice" -> "transaction!"
+    "3 BTC to 43b46..." -> transaction
+    "1 BTC to 43b46..." -> transaction
+    "4 BTC to 43b46..." -> transaction
 
-    "transaction!" -> "8 BTC to Alice"
+    transaction -> "8 BTC to 43b46..."
 }
