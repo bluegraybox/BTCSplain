@@ -1,0 +1,45 @@
+digraph G {
+    compound=true
+    rankdir=LR;
+    graph [
+        K=1.0,
+        overlap=false,
+        splines = spline,
+        style="rounded,bold"
+        color="#9999ff"
+        fontcolor="#9999ff",
+        fontname="Helvetica-bold"
+    ];
+    node [
+        shape=box
+        style="rounded,bold"
+        color="#9999ff",
+        fontcolor="#9999ff",
+        fontname="Helvetica-bold",
+    ];
+    edge [
+        # arrowsize=2,
+        color="#9999ff",
+    ];
+    subgraph cluster_inputs {
+        label="input transaction"
+        "PK hash"
+        "value"
+    };
+    subgraph cluster_creds {
+        label=credentials
+        signature
+        "public key"
+        graph[
+            # style="rounded,bold"
+            color="#99ff99"
+            # fontcolor="#9999ff",
+            # fontname="Helvetica-bold"
+        ]
+    };
+    "sign!" [color="#ee8800", fontcolor="#ee8800"]
+
+    "value" -> "sign!" [ltail=cluster_inputs]
+    "private key" -> "sign!"
+    "sign!" -> signature
+}
