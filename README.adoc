@@ -169,11 +169,11 @@ The document is readable, but anyone can verify the signature by decrypting it w
 
 *Signing*
 
-image:img/signature-1.png[create signature]
+image:slides/img/signature-1.png[create signature]
 
 *Verification*
 
-image:img/signature-2.png[verify signature]
+image:slides/img/signature-2.png[verify signature]
 
 == Transactions
 
@@ -195,16 +195,16 @@ For reasons we'll get into later, you can't spend part of a transaction. It all 
 What you can do is split it up and pay some of it back to yourself.
 "From transaction 13a16... give 2 BTC to 72fc3... and 3 BTC to 43b46...."
 
-image:img/transactions-1.png[split payment]
+image:slides/img/transactions-1.png[split payment]
 
 You can also do many-to-one or many-to-many transactions.
 You can take a bunch of little payments you've received, combine them into one bigger payment to someone else, and pay the difference back to yourself.
 
-image:img/transactions-2.png[many-to-many]
+image:slides/img/transactions-2.png[many-to-many]
 
 Or just collect them all into a single transaction.
 
-image:img/transactions-3.png[condense]
+image:slides/img/transactions-3.png[condense]
 
 === Validation
 
@@ -220,7 +220,7 @@ The script checks that the public key is the one expected, uses that public key 
 That proves that the claimant has the private key matching the public key required.
 The process is:
 
-image:img/verification.png[verify]
+image:slides/img/verification.png[verify]
 
 In pseudocode, that's:
 
@@ -250,7 +250,7 @@ Also note that the input section doesn't have an amount - that comes from the pr
 
 So a chain of transactions could look like:
 
-image:img/transaction.png[transactions]
+image:slides/img/transaction.png[transactions]
 
 Ok, so I can create a new transaction that takes Bitcoin from previous transactions and transfers it to someone else.
 And we've got a mechanism that lets someone verify that I'm allowed to do that.
@@ -265,7 +265,7 @@ That brings us to the actual blockchain.
 Rather than validating and storing each transaction individually, they're grouped into blocks, along with header data which includes hashes of its own transactions and of the previous block's header.
 Modifying an earlier block would change its hash, making any tampering evident.
 
-image:img/blockchain.png[blockchain]
+image:slides/img/blockchain.png[blockchain]
 
 As new transactions are added, it also updates an index (like a database index).
 This allow verifiers to quickly look up individual transactions.
@@ -304,7 +304,7 @@ Set a new random number, calculate the hash, see if it matches, try again.
 Given the total compute power of the network, you can estimate how long it would take to find a hash with a certain number of leading zeros.
 The bitcoin software actually adjusts the number of leading zeros required so that the time required to find a valid block remains fairly constant, at around ten minutes.
 
-image:img/proof_of_work.png[proof of work]
+image:slides/img/proof_of_work.png[proof of work]
 
 A nice thing about this is that nobody has to agree in advance what the block of transactions is.
 (Since it's a distributed network, everyone will receive transactions in a slightly different order.)
