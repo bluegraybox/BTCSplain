@@ -18,12 +18,13 @@ digraph G {
     ];
     "hash!" [color="#ee8800", fontcolor="#ee8800"]
     "decrypt(public)!" [color="#ee8800", fontcolor="#ee8800"]
+    "same?" [color="#ee8800", fontcolor="#ee8800"]
 
     signature -> "decrypt(public)!"
     "decrypt(public)!" -> hash1
-    hash2 -> "equal?"
+    hash2 -> "same?"
 
     document -> "hash!"
     "hash!" -> hash2
-    hash1 -> "equal?"
+    hash1 -> "same?"
 }

@@ -39,18 +39,20 @@ digraph G {
         "hash!"
         "hash! "
         "decrypt!"
-        "equal?"
-        "equal? "
+        "same?"
+        "same? "
     };
     "hash!" [color="#ee8800", fontcolor="#ee8800"]
     "decrypt!" [color="#ee8800", fontcolor="#ee8800"]
     "sign!" [color="#ee8800", fontcolor="#ee8800"]
     "hash! " [color="#ee8800", fontcolor="#ee8800"]
+    "same?" [color="#ee8800", fontcolor="#ee8800"]
+    "same? " [color="#ee8800", fontcolor="#ee8800"]
 
     
     # transaction -> "hash!"
     "value" -> "hash!" [ltail=cluster_inputs]
-    "hash!" -> "equal?"
+    "hash!" -> "same?"
 
     # transaction -> "sign!"
     "value" -> "sign!" [ltail=cluster_inputs]
@@ -58,9 +60,9 @@ digraph G {
     "sign!" -> signature
     signature -> "decrypt!"
     "public key" -> "decrypt!"
-    "decrypt!" -> "equal?"
+    "decrypt!" -> "same?"
 
     "public key" -> "hash! "
-    "hash! " -> "equal? "
-    "PK hash" -> "equal? "
+    "hash! " -> "same? "
+    "PK hash" -> "same? "
 }
