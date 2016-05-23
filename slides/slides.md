@@ -84,7 +84,7 @@ Verification
 
 ---
 
-# Transactions
+# Blockchain Transactions
 
 * public record
 * pseudonymous
@@ -93,7 +93,7 @@ Verification
 
 ---
 
-# Transactions
+# Blockchain Transactions
 
 Whole value of input must be accounted for
 
@@ -101,7 +101,7 @@ Whole value of input must be accounted for
 
 ---
 
-# Transactions
+# Blockchain Transactions
 
 Many to Many
 
@@ -109,7 +109,7 @@ Many to Many
 
 ---
 
-# Transactions
+# Blockchain Transactions
 
 * To spend your BTC, you have to
 * Say which transaction it came from
