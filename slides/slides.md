@@ -64,7 +64,7 @@
 
 ---
 
-# Uses
+# Example Uses
 
 * Passwords
 * File comparison (Git)
@@ -237,9 +237,6 @@ scriptPubKey: OP_DUP OP_HASH160 404371705fa9bd789a2fcd52d2c580b65d35549d OP_EQUA
 ---
 
 # Q&A
-
-* Property Titles
-* Distributed System of Record
 
 ---
 
