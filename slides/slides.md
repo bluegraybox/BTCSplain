@@ -9,9 +9,9 @@
 ---
 
 # What Even?
-* Bitcoin unit of value – BTC
-* Bitcoin system of exchange
-* Blockchain – distributed ledger
+* Bitcoin - unit of value (BTC)
+* Bitcoin - system of exchange
+* Blockchain - transaction database
 
 ---
 
@@ -23,33 +23,30 @@
 
 ---
 
-# Caveats
-
-* breakthroughs in fundamental mathematical theory
-* advances in quantum computing
-* mistakes in software implementations
-
----
-
 # Cryptography
 
 ![Encryption](img/encrypt-simple.png)
 
+![Encryption](img/decrypt-simple.png)
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 ---
 
-# Symmetric Cryptography
+# Symmetric-Key Cryptography
 
 ![Keyed Encryption](img/encrypt-keyed.png)
 
 ![Keyed Decryption](img/decrypt-keyed.png)
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
 
 # Public Key Cryptography
 
 ![public key encrypt](img/public-key-1.png)
+
 ![public key decrypt](img/public-key-2.png)
-![public key failed decrypt](img/public-key-3.png)
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
 
@@ -59,12 +56,12 @@
 
 * Fixed-size number
 * Not invertible
-* Collisions are highly unlikely (1/NoAiU)
+* Collisions are highly unlikely (1/10<sup>48-77</sup>)
 * Not predictable
 
 ---
 
-# Example Uses
+# Common Uses
 
 * Passwords
 * File comparison (Git)
@@ -79,41 +76,35 @@ Signing
 ![signing](img/signature-1.png)
 
 Verification
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ![verification](img/signature-2.png)
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
 
-# Blockchain Transactions
+# Blockchain
 
-* public record
-* pseudonymous
-    * e.g. 404371705fa9bd789a2fcd52d2c580b65d35549d
-* transactions, not account w/ balance
-
----
-
-# Blockchain Transactions
-
-Whole value of input must be accounted for
-
-![transaction](img/transactions-1.png)
+* Specialized database for transactions
+* Pseudonymous, by hash of public key
+* Transactions only, no account balance
 
 ---
 
-# Blockchain Transactions
-
-Many to Many
+# Transactions
 
 ![many-to-many](img/transactions-2.png)
 
+* Many to Many
+* Whole value of input must be accounted for
+
 ---
 
-# Blockchain Transactions
+# Validation
 
-* To spend your BTC, you have to
-* Say which transaction it came from
-* Prove that you’re you
+To spend an input transaction, you have to
+* Prove that it's yours
+* Prove that you're you
 
 ---
 
@@ -127,7 +118,7 @@ Claimant
 
 # Validation
 
-Verifier/Miner
+Verifier/Miner - Step 1
 
 ![verify key](img/verification-2.png)
 
@@ -135,7 +126,7 @@ Verifier/Miner
 
 # Validation
 
-Verifier/Miner
+Verifier/Miner - Step 2
 
 ![verify signature](img/verification-3.png)
 
@@ -152,9 +143,9 @@ Verifier/Miner
 ```javascript
 function valid(signature, publicKey) {
     return hash(publicKey) ==
-            "43b46ef2e61a3d6a725fe70fe2b3adaadbca7348” &&
+            "404371705fa9bd789a2fcd52d2c580b65d35549d" &&
         decrypt(signature, publicKey) ==
-            hash(inputTransactionBytes())
+            hash(thisTransactionBytes())
 }
 ```
 
@@ -162,7 +153,7 @@ function valid(signature, publicKey) {
 
 # Validation
 
-```
+```none
 Input:
 Previous tx: f5d8ee39a430901c91a5917b9f2dc19d6d1a0e9cea205b009ca73dd04470b9a6
 Index: 0
@@ -182,13 +173,13 @@ scriptPubKey: OP_DUP OP_HASH160 404371705fa9bd789a2fcd52d2c580b65d35549d OP_EQUA
 
 ---
 
-# Blockchain
+# Blockchain Blocks
 
 ![blockchain](img/blockchain.png)
 
 ---
 
-# Indexing
+# Blockchain Indexing
 
 * Efficient validation
 * Prevent double-spend
@@ -209,6 +200,15 @@ scriptPubKey: OP_DUP OP_HASH160 404371705fa9bd789a2fcd52d2c580b65d35549d OP_EQUA
 
 ---
 
+# Private Blockchains
+
+* Consensus, not proof-of-work – fast
+* Not anonymous
+* Legal governance
+* E.g. property titles, inter-bank settlement
+
+---
+
 # Smart Contracts
 
 * N-of-M signers (arbitrated)
@@ -219,20 +219,26 @@ scriptPubKey: OP_DUP OP_HASH160 404371705fa9bd789a2fcd52d2c580b65d35549d OP_EQUA
 
 ---
 
-# Problems
+# Human Problems
 
 * Key management
 * Ooops
 * Fraud
+* Implementation mistakes
+
+---
+
+# System Problems
+
 * Storage
 * Throughput
 
 ---
 
-# Potential
+# Caveats
 
-* Property Titles
-* Distributed System of Record
+* Mathematical breakthroughs
+* Quantum computing
 
 ---
 

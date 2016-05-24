@@ -15,7 +15,7 @@ while true ; do
         echo "updating index.html..."
         asciidoctor -o index.html README.adoc
     fi
-    for src in img/*.gv ; do
+    for src in slides/img/*.gv ; do
         base=${src%.gv}
         if [ $src -nt $base.$lang ] ; then
             echo "updating $base.$lang..."

@@ -36,9 +36,9 @@ They have survived decades of scrutiny.
 I trust them.
 
 There are only two fundamental tools, and everything else builds on them.
-They are public key cryptography, and hash functions.
+They are public key cryptography and hash functions.
 They're based on some really complicated math, stuff that's way over my head.
-The good news is that you don't have to understand the math, just what it does.
+The good news is that you don't have to understand the math to understand how it works - in particular, its limitations, how it could fail, and what happens when it does.
 
 Just a note: I'm going to use words like "never", "impossible", and "cannot".
 You should imagine that they always have a little asterisk next to them referring you to a footnote with a long-winded caveat about breakthroughs in fundamental mathematical theory, advances in quantum computing, or mistakes in software implementations.
