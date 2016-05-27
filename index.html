@@ -441,9 +441,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_blockchain">Blockchain</a></li>
 <li><a href="#_proof_of_work">Proof of Work</a></li>
+<li><a href="#_private_blockchains">Private Blockchains</a></li>
 <li><a href="#_smart_contracts">Smart Contracts</a></li>
-<li><a href="#_problems">Problems</a></li>
+<li><a href="#_human_problems">Human Problems</a></li>
+<li><a href="#_system_problems">System Problems</a></li>
 <li><a href="#_potential">Potential</a></li>
+<li><a href="#_conclusion">Conclusion</a></li>
 </ul>
 </div>
 <div class="paragraph">
@@ -697,12 +700,12 @@ The document is readable, but anyone can verify the signature by decrypting it w
 <h2 id="_transactions">Transactions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ok, now we&#8217;re getting into the actual bitcoin and blockchain part of this.</p>
+<p>Ok, now we&#8217;re getting into the actual Bitcoin and Blockchain part of this.</p>
 </div>
 <div class="paragraph">
-<p>When we talk about bitcoin payments, we imagine that it&#8217;s like exchanging cash, and a lot of the hype around bitcoin reinforces this.
+<p>When we talk about BTC payments, we imagine that it&#8217;s like exchanging cash, and a lot of the hype around Bitcoin reinforces this.
 But that&#8217;s actually a really misleading metaphor.
-The blockchain is like a big account book with every transaction ever written in it.
+The Blockchain is like a big account book with every transaction ever written in it.
 The only reason it&#8217;s anonymous is that everyone is only identified by their public key.
 (And any one person can use multiple keys to muddy the waters.)</p>
 </div>
@@ -738,7 +741,7 @@ You can take a bunch of little payments you&#8217;ve received, combine them into
 <div class="sect2">
 <h3 id="_validation">Validation</h3>
 <div class="paragraph">
-<p>A Transaction, as it&#8217;s recorded in the blockchain, is a set of inputs and outputs - payments from and to.
+<p>A Transaction, as it&#8217;s recorded in the Blockchain, is a set of inputs and outputs - payments from and to.
 Every input is the output from a previous transaction.
 You take payments that were made to you, and use them to pay someone else.</p>
 </div>
@@ -796,7 +799,7 @@ Also note that the input section doesn&#8217;t have an amount - that comes from 
 <p><span class="image"><img src="slides/img/transaction.png" alt="transactions"></span></p>
 </div>
 <div class="paragraph">
-<p>Ok, so I can create a new transaction that takes Bitcoin from previous transactions and transfers it to someone else.
+<p>Ok, so I can create a new transaction that takes BTC from previous transactions and transfers it to someone else.
 And we&#8217;ve got a mechanism that lets someone verify that I&#8217;m allowed to do that.
 But part of that verification requires that they can look up the input transactions and know that they&#8217;re valid.
 Which means that all of <em>their</em> inputs have to have been validated.
@@ -810,12 +813,12 @@ How do we store that transaction history and not have to validate the whole chai
 <h2 id="_blockchain">Blockchain</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>That brings us to the actual blockchain.
+<p>That brings us to the actual Blockchain.
 Rather than validating and storing each transaction individually, they&#8217;re grouped into blocks, along with header data which includes hashes of its own transactions and of the previous block&#8217;s header.
 Modifying an earlier block would change its hash, making any tampering evident.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="slides/img/blockchain.png" alt="blockchain"></span></p>
+<p><span class="image"><img src="slides/img/blockchain.png" alt="Blockchain"></span></p>
 </div>
 <div class="paragraph">
 <p>As new transactions are added, it also updates an index (like a database index).
@@ -831,8 +834,8 @@ If they&#8217;re in the same block, it&#8217;s easy to catch, but we also need t
 <h2 id="_proof_of_work">Proof of Work</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>So far, there&#8217;s no reason the blockchain couldn&#8217;t be a centralized database.
-All transactions get sent to it, it validates them and adds them to the blockchain.
+<p>So far, there&#8217;s no reason the Blockchain couldn&#8217;t be a centralized database.
+All transactions get sent to it, it validates them and adds them to the Blockchain.
 Simple.
 And for some of the use cases people talk about, they could totally do that.</p>
 </div>
@@ -861,7 +864,7 @@ For the block itself to be valid, its hash has to have at least a certain number
 <p>To find a filler value that will make the block validate is a matter of brute force guesswork:
 Set a new random number, calculate the hash, see if it matches, try again.
 Given the total compute power of the network, you can estimate how long it would take to find a hash with a certain number of leading zeros.
-The bitcoin software actually adjusts the number of leading zeros required so that the time required to find a valid block remains fairly constant, at around ten minutes.</p>
+The Bitcoin software actually adjusts the number of leading zeros required so that the time required to find a valid block remains fairly constant, at around ten minutes.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="slides/img/proof_of_work.png" alt="proof of work"></span></p>
@@ -869,9 +872,30 @@ The bitcoin software actually adjusts the number of leading zeros required so th
 <div class="paragraph">
 <p>A nice thing about this is that nobody has to agree in advance what the block of transactions is.
 (Since it&#8217;s a distributed network, everyone will receive transactions in a slightly different order.)
-Everyone can work on validating their own block, and whoever generates a valid block first broadcasts it.
+Everyone can work on validating their own block, and the first one to generate a valid block broadcasts it.
 Everyone else checks that it&#8217;s valid and adds it to their chain.
 They stop work on their block, discard any transactions that were added in the new block, and start building a new block.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_private_blockchains">Private Blockchains</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now let&#8217;s step away from Bitcoin, because a lot of the interest in the commercial world is in separating out the Blockchain and defining different rules to manage it.
+Again, Bitcoin&#8217;s focus is on anonymity and untrusted participants.
+In commercial uses, especially in financial services, there can be a high degree of trust between the participants - say, a banking consortium -
+and regulatory requirements that users <em>not</em> be anonymous - "Know Your Customer" (KYC) and "Anti Money Laudering" (AML).</p>
+</div>
+<div class="paragraph">
+<p>Remember that the delay introduced by the proof-of-work serves two purposes:
+to randomize the selection of the next block, and to reduce the chance of more than one valid blocks being sent out at the same time.
+Within a smaller network of trusted participants - a couple hundred banks - you could use a much more lightweight consensus protocol, reducing latency and increasing transaction volume.</p>
+</div>
+<div class="paragraph">
+<p>You could also use Blockchain to record transfers of something other than BTC.
+Fundamentally, transactions transfer ownership of some piece of property from one person to another.
+That could be a car title, a piece of artwork, or a house.</p>
 </div>
 </div>
 </div>
@@ -879,7 +903,7 @@ They stop work on their block, discard any transactions that were added in the n
 <h2 id="_smart_contracts">Smart Contracts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A while back, you may have been wondering why transaction outputs include this complicated validation script, rather than just a public key.
+<p>When we were looking at the example Bitcoin transaction, you may have been wondering why transaction outputs include this complicated validation script, rather than just a public key.
 What using a script lets you do is define other conditions for validating the transaction.</p>
 </div>
 <div class="paragraph">
@@ -901,7 +925,7 @@ Once they do, you will.</p>
 </div>
 <div class="paragraph">
 <p>In theory, you could also have transactions that are only valid after a certain date, but this capability was disabled in Bitcoin due to concerns about Denial-of-Service attacks.
-It may well be workable in a private blockchain network, among trusted parties.
+It may well be workable in a private Blockchain network, among trusted parties.
 This would allow escrow transactions and returnable deposits.</p>
 </div>
 <div class="paragraph">
@@ -913,22 +937,50 @@ If you wanted your rent for the next year to be paid automatically every month w
 </div>
 </div>
 <div class="sect1">
-<h2 id="_problems">Problems</h2>
+<h2 id="_human_problems">Human Problems</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Key management
-    hard drive crashes
-    stolen keys</p>
+<p>So there&#8217;s a lot of potential here, but there are a lot of things to worry about.
+The mathematics of Blockchain may be flawless and elegant, but people aren&#8217;t.</p>
 </div>
 <div class="paragraph">
-<p>Ooops
-    typos
-    contested charges - fewer, but harder to resolve</p>
+<p>The biggest concern for any consumer-facing Blockchain is key management.
+Even within the Bitcoin community, which is mostly pretty tech-savvy, there are numerous horror stories of private keys lost through mistakes, drive failures, etc., rendering thousands or millions of dollars worth of BTC unspendable.</p>
 </div>
 <div class="paragraph">
-<p>Bitcoin
-    throughput
-    storage</p>
+<p>Private keys can also be stolen by anyone able to hack into your machine and copy out a file.
+That&#8217;s a pretty low bar in the security world.
+The key can be password protected, but you know how bad most people are at setting good passwords.</p>
+</div>
+<div class="paragraph">
+<p>Even aside from theft, there are plain mistakes.
+Typo an amount, or send it to the wrong address.
+Once it&#8217;s gone, it&#8217;s gone.
+There&#8217;s no way to undo a transaction.
+You can ask the recipient to transfer the value back to you.
+If you know who they are.
+Without some outside governing authority, there&#8217;s no way to make them.</p>
+</div>
+<div class="paragraph">
+<p>Blockchain also doesn&#8217;t allow for simple contested charges.
+The Blockchain transaction is usually only half of the transaction: goods and/or services are also exchanged in the real world.
+Unless the transaction has an arbitrator, as described above, there&#8217;s no recourse for the buyer if they aren&#8217;t happy with what they got.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_system_problems">System Problems</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Again, the mathematics of Blockchain may be flawless and elegant, but the software that implements it may not be.</p>
+</div>
+<div class="paragraph">
+<p>Depending on the use case, the storage required for the Blockchain can become an issue.
+It&#8217;s an ever-growing database of every transaction ever.</p>
+</div>
+<div class="paragraph">
+<p>Private Blockchains with different consensus algorithms can be faster, but Bitcoin&#8217;s proof-of-work limits it to about 7 transactions per second.
+Compare this to 115 for Paypal and 2000-4000 for Visa.</p>
 </div>
 </div>
 </div>
@@ -940,15 +992,36 @@ If you wanted your rent for the next year to be paid automatically every month w
 </div>
 <div class="paragraph">
 <p>distributed transaction network
-    We&#8217;re starting to realize that all data storage is distributed, and has the problems of distributed systems.
-    What we have now are systems that pretend to be authoritative systems of record, and just have elaborate backup, fail-over, and conflict resolution mechanisms.</p>
+* We&#8217;re starting to realize that all data storage is distributed, and has the problems of distributed systems.
+* What we have now are systems that pretend to be authoritative systems of record, and just have elaborate backup, fail-over, and conflict resolution mechanisms.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>not consumer-facing because of key management</p>
+</li>
+<li>
+<p>"can&#8217;t rewrite history" is appealing for financial services</p>
+</li>
+<li>
+<p>but need some way to reverse transactions - good to leave them in record</p>
+</li>
+<li>
+<p>block validation good for widely distributed/high-latency network</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-23 18:23:53 EDT
+Last updated 2016-05-27 13:31:36 EDT
 </div>
 </div>
 </body>

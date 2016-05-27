@@ -177,11 +177,11 @@ image:slides/img/signature-2.png[verify signature]
 
 == Transactions
 
-Ok, now we're getting into the actual bitcoin and blockchain part of this.
+Ok, now we're getting into the actual Bitcoin and Blockchain part of this.
 
-When we talk about bitcoin payments, we imagine that it's like exchanging cash, and a lot of the hype around bitcoin reinforces this.
+When we talk about BTC payments, we imagine that it's like exchanging cash, and a lot of the hype around Bitcoin reinforces this.
 But that's actually a really misleading metaphor.
-The blockchain is like a big account book with every transaction ever written in it.
+The Blockchain is like a big account book with every transaction ever written in it.
 The only reason it's anonymous is that everyone is only identified by their public key.
 (And any one person can use multiple keys to muddy the waters.)
 
@@ -208,7 +208,7 @@ image:slides/img/transactions-3.png[condense]
 
 === Validation
 
-A Transaction, as it's recorded in the blockchain, is a set of inputs and outputs - payments from and to.
+A Transaction, as it's recorded in the Blockchain, is a set of inputs and outputs - payments from and to.
 Every input is the output from a previous transaction.
 You take payments that were made to you, and use them to pay someone else.
 
@@ -252,7 +252,7 @@ So a chain of transactions could look like:
 
 image:slides/img/transaction.png[transactions]
 
-Ok, so I can create a new transaction that takes Bitcoin from previous transactions and transfers it to someone else.
+Ok, so I can create a new transaction that takes BTC from previous transactions and transfers it to someone else.
 And we've got a mechanism that lets someone verify that I'm allowed to do that.
 But part of that verification requires that they can look up the input transactions and know that they're valid.
 Which means that all of _their_ inputs have to have been validated.
@@ -261,11 +261,11 @@ How do we store that transaction history and not have to validate the whole chai
 
 == Blockchain
 
-That brings us to the actual blockchain.
+That brings us to the actual Blockchain.
 Rather than validating and storing each transaction individually, they're grouped into blocks, along with header data which includes hashes of its own transactions and of the previous block's header.
 Modifying an earlier block would change its hash, making any tampering evident.
 
-image:slides/img/blockchain.png[blockchain]
+image:slides/img/blockchain.png[Blockchain]
 
 As new transactions are added, it also updates an index (like a database index).
 This allow verifiers to quickly look up individual transactions.
@@ -276,8 +276,8 @@ If they're in the same block, it's easy to catch, but we also need to be able to
 
 == Proof of Work
 
-So far, there's no reason the blockchain couldn't be a centralized database.
-All transactions get sent to it, it validates them and adds them to the blockchain.
+So far, there's no reason the Blockchain couldn't be a centralized database.
+All transactions get sent to it, it validates them and adds them to the Blockchain.
 Simple.
 And for some of the use cases people talk about, they could totally do that.
 
@@ -302,19 +302,34 @@ For the block itself to be valid, its hash has to have at least a certain number
 To find a filler value that will make the block validate is a matter of brute force guesswork:
 Set a new random number, calculate the hash, see if it matches, try again.
 Given the total compute power of the network, you can estimate how long it would take to find a hash with a certain number of leading zeros.
-The bitcoin software actually adjusts the number of leading zeros required so that the time required to find a valid block remains fairly constant, at around ten minutes.
+The Bitcoin software actually adjusts the number of leading zeros required so that the time required to find a valid block remains fairly constant, at around ten minutes.
 
 image:slides/img/proof_of_work.png[proof of work]
 
 A nice thing about this is that nobody has to agree in advance what the block of transactions is.
 (Since it's a distributed network, everyone will receive transactions in a slightly different order.)
-Everyone can work on validating their own block, and whoever generates a valid block first broadcasts it.
+Everyone can work on validating their own block, and the first one to generate a valid block broadcasts it.
 Everyone else checks that it's valid and adds it to their chain.
 They stop work on their block, discard any transactions that were added in the new block, and start building a new block.
 
+== Private Blockchains
+
+Now let's step away from Bitcoin, because a lot of the interest in the commercial world is in separating out the Blockchain and defining different rules to manage it.
+Again, Bitcoin's focus is on anonymity and untrusted participants.
+In commercial uses, especially in financial services, there can be a high degree of trust between the participants - say, a banking consortium -
+and regulatory requirements that users _not_ be anonymous - "Know Your Customer" (KYC) and "Anti Money Laudering" (AML).
+
+Remember that the delay introduced by the proof-of-work serves two purposes:
+to randomize the selection of the next block, and to reduce the chance of more than one valid blocks being sent out at the same time.
+Within a smaller network of trusted participants - a couple hundred banks - you could use a much more lightweight consensus protocol, reducing latency and increasing transaction volume.
+
+You could also use Blockchain to record transfers of something other than BTC.
+Fundamentally, transactions transfer ownership of some piece of property from one person to another.
+That could be a car title, a piece of artwork, or a house.
+
 == Smart Contracts
 
-A while back, you may have been wondering why transaction outputs include this complicated validation script, rather than just a public key.
+When we were looking at the example Bitcoin transaction, you may have been wondering why transaction outputs include this complicated validation script, rather than just a public key.
 What using a script lets you do is define other conditions for validating the transaction.
 
 In a simple example, the script could require two out of three signatures: a buyer, seller, and arbitrator.
@@ -332,7 +347,7 @@ Until they add up to 100 BTC, the transaction won't validate and you won't be ab
 Once they do, you will.
 
 In theory, you could also have transactions that are only valid after a certain date, but this capability was disabled in Bitcoin due to concerns about Denial-of-Service attacks.
-It may well be workable in a private blockchain network, among trusted parties.
+It may well be workable in a private Blockchain network, among trusted parties.
 This would allow escrow transactions and returnable deposits.
 
 There's an inherent limitation of Smart Contracts: The only way to mathematically guarantee that money can be paid in the future is to lock it up now.
@@ -340,24 +355,51 @@ Any transaction that pays someone in the future takes the money away from you to
 They won't be able to spend it until the time limit is up, but you won't either.
 If you wanted your rent for the next year to be paid automatically every month with a Smart Contract, you'd effectively have to pay the full year up front.
 
-== Problems
+== Human Problems
 
-Key management
-    hard drive crashes
-    stolen keys
+So there's a lot of potential here, but there are a lot of things to worry about.
+The mathematics of Blockchain may be flawless and elegant, but people aren't.
 
-Ooops
-    typos
-    contested charges - fewer, but harder to resolve
+The biggest concern for any consumer-facing Blockchain is key management.
+Even within the Bitcoin community, which is mostly pretty tech-savvy, there are numerous horror stories of private keys lost through mistakes, drive failures, etc., rendering thousands or millions of dollars worth of BTC unspendable.
 
-Bitcoin
-    throughput
-    storage
+Private keys can also be stolen by anyone able to hack into your machine and copy out a file.
+That's a pretty low bar in the security world.
+The key can be password protected, but you know how bad most people are at setting good passwords.
+
+Even aside from theft, there are plain mistakes.
+Typo an amount, or send it to the wrong address.
+Once it's gone, it's gone.
+There's no way to undo a transaction.
+You can ask the recipient to transfer the value back to you.
+If you know who they are.
+Without some outside governing authority, there's no way to make them.
+
+Blockchain also doesn't allow for simple contested charges.
+The Blockchain transaction is usually only half of the transaction: goods and/or services are also exchanged in the real world.
+Unless the transaction has an arbitrator, as described above, there's no recourse for the buyer if they aren't happy with what they got.
+
+== System Problems
+
+Again, the mathematics of Blockchain may be flawless and elegant, but the software that implements it may not be.
+
+Depending on the use case, the storage required for the Blockchain can become an issue.
+It's an ever-growing database of every transaction ever.
+
+Private Blockchains with different consensus algorithms can be faster, but Bitcoin's proof-of-work limits it to about 7 transactions per second.
+Compare this to 115 for Paypal and 2000-4000 for Visa.
 
 == Potential
 
 "value" could be anything: title to car or house, any property
 
 distributed transaction network
-    We're starting to realize that all data storage is distributed, and has the problems of distributed systems.
-    What we have now are systems that pretend to be authoritative systems of record, and just have elaborate backup, fail-over, and conflict resolution mechanisms.
+* We're starting to realize that all data storage is distributed, and has the problems of distributed systems.
+* What we have now are systems that pretend to be authoritative systems of record, and just have elaborate backup, fail-over, and conflict resolution mechanisms.
+
+== Conclusion
+
+* not consumer-facing because of key management
+* "can't rewrite history" is appealing for financial services
+* but need some way to reverse transactions - good to leave them in record
+* block validation good for widely distributed/high-latency network
