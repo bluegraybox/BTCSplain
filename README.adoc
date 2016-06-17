@@ -313,12 +313,8 @@ regulatory requirements that users _not_ be anonymous--Know Your Customer (KYC) 
 Remember that the delay introduced by the proof-of-work serves two purposes:
 to randomize the selection of the next block, and to reduce the chance of more than one valid blocks being sent out at the same time.
 Within a smaller network of trusted participants--a couple hundred banks--you could use a much more lightweight consensus protocol, reducing latency and increasing transaction volume.
-As we'll see later, that's important if you want to get to "VISA scale".
-
-You could also use Blockchain to record transfers of something other than BTC.
-While we may think of it as a payment system, it's really a record of ownership and exchange of property.
-In the Bitcoin blockchain, that's BTC, but it could be car titles, diamonds, artwork, or land.
-That opens up a lot of exciting possibilities.
+That's important if you want to get to "VISA scale".
+Bitcoin's proof-of-work limits it to about 7 transactions per second, compared to 115 for Paypal and 2000-4000 for Visa.
 
 Scaling up Blockchain to large transaction volumes may effectively rule out amateurs.
 It's an ever-growing database of every transaction ever.
@@ -327,8 +323,10 @@ about what https://usa.visa.com/run-your-business/small-business-tools/retail.ht
 At VISA scale, it would grow by 25 TB a year.
 Also, just transferring that data would eat up 6.5 Mbps on average.
 
-Private blockchains can also use different consensus algorithms to allow faster validation.
-Bitcoin's proof-of-work limits it to about 7 transactions per second, compared to 115 for Paypal and 2000-4000 for Visa.
+You could also use Blockchain to record transfers of something other than BTC.
+While we may think of it as a payment system, it's really a record of ownership and exchange of property.
+In the Bitcoin blockchain, that's BTC, but it could be titles to cars, diamonds, artwork, or land.
+That opens up a lot of possibilities.
 
 == Smart Contracts
 
@@ -424,4 +422,4 @@ It's an open question whether the efficiency gains offset the risk and cost of f
 
 To its credit, Blockchain is a brilliant solution to its original problem: a trusted system of record maintained by an untrusted, distributed, global network with unreliable connectivity and latency.
 Many things that most databases take as rare failure modes, it treats as normal behavior.
-But it's less clear how useful it is outside that extreme environment.
+I think there are things to be learned from it, and ideas that may surface in other products, but it's less clear how useful the whole package is outside that extreme environment.
