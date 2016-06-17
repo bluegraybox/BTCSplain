@@ -444,20 +444,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_private_blockchains">Private Blockchains</a></li>
 <li><a href="#_smart_contracts">Smart Contracts</a></li>
 <li><a href="#_human_problems">Human Problems</a></li>
-<li><a href="#_system_problems">System Problems</a></li>
-<li><a href="#_potential">Potential</a></li>
 <li><a href="#_conclusion">Conclusion</a></li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Let me start out by clarifying the difference between Bitcoin and Blockchain, in broad strokes, for anyone not familiar with them.
-"Bitcoin" is used to refer to both the digital currency - the unit of value - and the software system that allows you to exchange this currency.
+"Bitcoin" is used to refer to both the digital currency&#8212;&#8203;the unit of value&#8212;&#8203;and the software system that allows you to exchange this currency.
 I&#8217;ll use BTC for clarity when referring to the currency.
 Mostly, we&#8217;re going to be talking about the system.</p>
 </div>
 <div class="paragraph">
 <p>Blockchain is basically a special-purpose distributed database.
-It&#8217;s like an account book - the part of the system that stores transactions - and Bitcoin wraps software around it to control how transactions get added.
+It&#8217;s like an account book&#8212;&#8203;the part of the system that stores transactions&#8212;&#8203;and Bitcoin wraps software around it to control how transactions get added.
 Some of that logic is specific to Bitcoin&#8217;s idea of totally anonymous, decentralized trust.
 If you&#8217;re a group of banks trying to record transactions, or a group of people within an organization, you can still use Blockchain, but wrap different rules around it.</p>
 </div>
@@ -465,13 +463,13 @@ If you&#8217;re a group of banks trying to record transactions, or a group of pe
 <p>I&#8217;ve been to a number of talks about Bitcoin and Blockchain recently, and I&#8217;ve found them kinda frustrating.
 They&#8217;re given by enthusiasts who go on about all the cool things you&#8217;ll be able to do with these technologies, how they&#8217;re going to revolutionize finance and commerce, without explaining how they work.
 I understand not wanting to get too deep in the weeds for a general audience, but without a basic grasp of how these technologies work, people can&#8217;t trust them.
-That&#8217;s a problem because the entire point of Bitcoin is to replace trust in institutions - government and banks - with trust in technology.
+That&#8217;s a problem because the entire point of Bitcoin is to replace trust in institutions&#8212;&#8203;government and banks&#8212;&#8203;with trust in technology.
 If you don&#8217;t understand the technology, you&#8217;re trusting the people selling the technology.
 And you should always be skeptical of people trying to sell you something.</p>
 </div>
 <div class="paragraph">
 <p>Spoiler: Bitcoin and Blockchain are not magical, perfect, and flawless.
-They have problems - some straightforwardly technical and probably solvable, but some at that tricky and unavoidable intersection of people and technology.</p>
+They have problems&#8212;&#8203;some straightforwardly technical and probably solvable, but some at that tricky and unavoidable intersection of people and technology.</p>
 </div>
 <div class="paragraph">
 <p>I&#8217;m not going to go all that deep, but I want to strip away at least one layer of magic.
@@ -484,7 +482,7 @@ I trust them.</p>
 <p>There are only two fundamental tools, and everything else builds on them.
 They are public key cryptography and hash functions.
 They&#8217;re based on some really complicated math, stuff that&#8217;s way over my head.
-The good news is that you don&#8217;t have to understand the math to understand how it works - in particular, its limitations, how it could fail, and what happens when it does.</p>
+The good news is that you don&#8217;t have to understand the math to understand how it works&#8212;&#8203;in particular, its limitations, how it could fail, and what happens when it does.</p>
 </div>
 <div class="paragraph">
 <p>Just a note: I&#8217;m going to use words like "never", "impossible", and "cannot".
@@ -612,7 +610,7 @@ The data can be anything from a single byte to a high-def movie file.</p>
 <p>The same data always generates the same number</p>
 </li>
 <li>
-<p>It&#8217;s not reversible - you can&#8217;t reconstruct the input data from the output number</p>
+<p>It&#8217;s not reversible&#8212;&#8203;you can&#8217;t reconstruct the input data from the output number</p>
 </li>
 <li>
 <p>Different data can generate the same number (a "collision")</p>
@@ -741,7 +739,7 @@ You can take a bunch of little payments you&#8217;ve received, combine them into
 <div class="sect2">
 <h3 id="_validation">Validation</h3>
 <div class="paragraph">
-<p>A Transaction, as it&#8217;s recorded in the Blockchain, is a set of inputs and outputs - payments from and to.
+<p>A Transaction, as it&#8217;s recorded in the Blockchain, is a set of inputs and outputs&#8212;&#8203;payments from and to.
 Every input is the output from a previous transaction.
 You take payments that were made to you, and use them to pay someone else.</p>
 </div>
@@ -750,7 +748,7 @@ You take payments that were made to you, and use them to pay someone else.</p>
 </div>
 <div class="paragraph">
 <p>The transaction output doesn&#8217;t just have a public key; it has a little executable script that is used to verify any claims to it.
-The script takes a public key and a signature of its own transaction as inputs - that&#8217;s what you have to provide to claim it.
+The script takes a public key and a signature of its own transaction as inputs&#8212;&#8203;that&#8217;s what you have to provide to claim it.
 The script checks that the public key is the one expected, uses that public key to decrypt the signature provided, and compares that to the hash of its own transaction.
 That proves that the claimant has the private key matching the public key required.
 The process is:</p>
@@ -789,7 +787,7 @@ OP_EQUALVERIFY OP_CHECKSIG</pre>
 <div class="paragraph">
 <p>That&#8217;s the scripting language at the bottom. It actually includes a hash of the public key, not the full key, which is more anonymous and more compact.
 "scriptSig" is the signature and public key that will be fed into the script for the input ("Previous tx").
-Also note that the input section doesn&#8217;t have an amount - that comes from the previous transaction.
+Also note that the input section doesn&#8217;t have an amount&#8212;&#8203;that comes from the previous transaction.
 ("Index" says which output we&#8217;re claiming.)</p>
 </div>
 <div class="paragraph">
@@ -884,18 +882,32 @@ They stop work on their block, discard any transactions that were added in the n
 <div class="paragraph">
 <p>Now let&#8217;s step away from Bitcoin, because a lot of the interest in the commercial world is in separating out the Blockchain and defining different rules to manage it.
 Again, Bitcoin&#8217;s focus is on anonymity and untrusted participants.
-In commercial uses, especially in financial services, there can be a high degree of trust between the participants - say, a banking consortium -
-and regulatory requirements that users <em>not</em> be anonymous - "Know Your Customer" (KYC) and "Anti Money Laudering" (AML).</p>
+In commercial uses, especially in financial services, there can be a high degree of trust between the participants&#8212;&#8203;say, a banking consortium&#8212;&#8203;and
+regulatory requirements that users <em>not</em> be anonymous&#8212;&#8203;Know Your Customer (KYC) and Anti Money Laudering (AML).</p>
 </div>
 <div class="paragraph">
 <p>Remember that the delay introduced by the proof-of-work serves two purposes:
 to randomize the selection of the next block, and to reduce the chance of more than one valid blocks being sent out at the same time.
-Within a smaller network of trusted participants - a couple hundred banks - you could use a much more lightweight consensus protocol, reducing latency and increasing transaction volume.</p>
+Within a smaller network of trusted participants&#8212;&#8203;a couple hundred banks&#8212;&#8203;you could use a much more lightweight consensus protocol, reducing latency and increasing transaction volume.
+As we&#8217;ll see later, that&#8217;s important if you want to get to "VISA scale".</p>
 </div>
 <div class="paragraph">
 <p>You could also use Blockchain to record transfers of something other than BTC.
-Fundamentally, transactions transfer ownership of some piece of property from one person to another.
-That could be a car title, a piece of artwork, or a house.</p>
+While we may think of it as a payment system, it&#8217;s really a record of ownership and exchange of property.
+In the Bitcoin blockchain, that&#8217;s BTC, but it could be car titles, diamonds, artwork, or land.
+That opens up a lot of exciting possibilities.</p>
+</div>
+<div class="paragraph">
+<p>Scaling up Blockchain to large transaction volumes may effectively rule out amateurs.
+It&#8217;s an ever-growing database of every transaction ever.
+Right now, Bitcoin&#8217;s blockchain takes up <a href="https://blockchain.info/charts/blocks-size">70 GB</a> and contains <a href="https://blockchain.info/charts/n-transactions-total">140 million transactions</a>,
+about what <a href="https://usa.visa.com/run-your-business/small-business-tools/retail.html">Visa handles every day</a>.
+At VISA scale, it would grow by 25 TB a year.
+Also, just transferring that data would eat up 6.5 Mbps on average.</p>
+</div>
+<div class="paragraph">
+<p>Private blockchains can also use different consensus algorithms to allow faster validation.
+Bitcoin&#8217;s proof-of-work limits it to about 7 transactions per second, compared to 115 for Paypal and 2000-4000 for Visa.</p>
 </div>
 </div>
 </div>
@@ -925,7 +937,7 @@ Once they do, you will.</p>
 </div>
 <div class="paragraph">
 <p>In theory, you could also have transactions that are only valid after a certain date, but this capability was disabled in Bitcoin due to concerns about Denial-of-Service attacks.
-It may well be workable in a private Blockchain network, among trusted parties.
+It may well be workable in a private Blockchain network among trusted parties.
 This would allow escrow transactions and returnable deposits.</p>
 </div>
 <div class="paragraph">
@@ -940,88 +952,94 @@ If you wanted your rent for the next year to be paid automatically every month w
 <h2 id="_human_problems">Human Problems</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>So there&#8217;s a lot of potential here, but there are a lot of things to worry about.
+<p>So there&#8217;s a lot of potential here, but there&#8217;s also a lot to worry about.
 The mathematics of Blockchain may be flawless and elegant, but people aren&#8217;t.</p>
 </div>
 <div class="paragraph">
-<p>The biggest concern for any consumer-facing Blockchain is key management.
-Even within the Bitcoin community, which is mostly pretty tech-savvy, there are numerous horror stories of private keys lost through mistakes, drive failures, etc., rendering thousands or millions of dollars worth of BTC unspendable.</p>
+<p>The biggest concern is key management, especially for consumer-facing applications.
+As far as the Blockchain is concerned, you <em>are</em> your private key: Someone who steals it becomes you; if you lose it, you cease to exist.
+Even within the Bitcoin community, which is mostly pretty tech-savvy, there are plenty of horror stories of private keys lost to drive failures and such,
+rendering thousands or millions of dollars worth of BTC unspendable.</p>
 </div>
 <div class="paragraph">
-<p>Private keys can also be stolen by anyone able to hack into your machine and copy out a file.
+<p>You could set up some sort of scheme where all payments only required one of three public keys,
+the other two being two backups you store offline or with some trusted third party.
+But that only protects against loss, not theft, and opens up a whole world of other attacks.
+Inevitably, any solution that allows you to recover from loss or theft of keys will as well.</p>
+</div>
+<div class="paragraph">
+<p>Private keys can be stolen by anyone able to hack into your machine and copy out a file.
 That&#8217;s a pretty low bar in the security world.
-The key can be password protected, but you know how bad most people are at setting good passwords.</p>
+The key can be password protected, but you know how bad most people are at setting secure passwords.
+It&#8217;s even easier for someone malicious to delete your private key.
+They don&#8217;t get your money, but you don&#8217;t either.</p>
 </div>
 <div class="paragraph">
-<p>Even aside from theft, there are plain mistakes.
-Typo an amount, or send it to the wrong address.
-Once it&#8217;s gone, it&#8217;s gone.
+<p>Again, the mathematics of Blockchain may be flawless and elegant, but it&#8217;s wrapped up in software written by humans.
+Bitcoin has a <a href="https://nakedsecurity.sophos.com/2014/03/06/where-have-all-the-bitcoins-gone/">long history of implementation flaws</a> leading to significant losses.</p>
+</div>
+<div class="paragraph">
+<p>There are also disagreements.
+Remember that the Blockchain transaction is only one side of the deal: goods and/or services are also exchanged in the real world.
+Blockchain doesn&#8217;t allow for contested charges.
+Unless the transaction has an arbitrator, as described above, there&#8217;s no recourse for an unhappy buyer.</p>
+</div>
+<div class="paragraph">
+<p>Even aside from theft, vandalism, and fraud, there are plain mistakes.
+Typo an amount, or send it to the wrong address&#8212;&#8203;once it&#8217;s gone, it&#8217;s gone.
 There&#8217;s no way to undo a transaction.
-You can ask the recipient to transfer the value back to you.
+You can ask them nicely to give it back.
 If you know who they are.
-Without some outside governing authority, there&#8217;s no way to make them.</p>
+Without traceable identities and governing authority, there&#8217;s no way to make them.</p>
 </div>
 <div class="paragraph">
-<p>Blockchain also doesn&#8217;t allow for simple contested charges.
-The Blockchain transaction is usually only half of the transaction: goods and/or services are also exchanged in the real world.
-Unless the transaction has an arbitrator, as described above, there&#8217;s no recourse for the buyer if they aren&#8217;t happy with what they got.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_system_problems">System Problems</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Again, the mathematics of Blockchain may be flawless and elegant, but the software that implements it may not be.</p>
-</div>
-<div class="paragraph">
-<p>Depending on the use case, the storage required for the Blockchain can become an issue.
-It&#8217;s an ever-growing database of every transaction ever.</p>
-</div>
-<div class="paragraph">
-<p>Private Blockchains with different consensus algorithms can be faster, but Bitcoin&#8217;s proof-of-work limits it to about 7 transactions per second.
-Compare this to 115 for Paypal and 2000-4000 for Visa.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_potential">Potential</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>"value" could be anything: title to car or house, any property</p>
-</div>
-<div class="paragraph">
-<p>distributed transaction network
-* We&#8217;re starting to realize that all data storage is distributed, and has the problems of distributed systems.
-* What we have now are systems that pretend to be authoritative systems of record, and just have elaborate backup, fail-over, and conflict resolution mechanisms.</p>
+<p>The only way to effectively cancel a transaction is to create a new transaction to transfer the value back.
+But it&#8217;s hard to separate that from the power to create arbitrary transactions.
+For the case where the original key has been lost or stolen, the cancelling transfer would be to an different key.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_conclusion">Conclusion</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>not consumer-facing because of key management</p>
-</li>
-<li>
-<p>"can&#8217;t rewrite history" is appealing for financial services</p>
-</li>
-<li>
-<p>but need some way to reverse transactions - good to leave them in record</p>
-</li>
-<li>
-<p>block validation good for widely distributed/high-latency network</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Ultimately, Blockchain is not some unique piece of technological magic.
+It&#8217;s a distributed database with some unusual characteristics.
+If you&#8217;re thinking of using it, you should be able to explain why it fits your business requirements better than something like Kafka, or a plain relational database.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s a general caveat to automation (both software and mechanical):
+Taking humans out of the loop may make the system more efficient, less error-prone, and less vulnerable to attack;
+but it may also make blunders and successful attacks more damaging and harder to recover from.</p>
+</div>
+<div class="paragraph">
+<p>I haven&#8217;t heard any really well thought-out solutions to the concerns around key management.
+Until I do, I think that&#8217;s a show-stopper.
+Private key as proof of identity works well when it works, but its failure modes are pretty disastrous.
+In a public, consumer-facing Blockchain, it&#8217;s unmanageable; in a private one, unnecessary.</p>
+</div>
+<div class="paragraph">
+<p>Accountants don&#8217;t use erasers, but they do strike things out.
+It&#8217;s good that Blockchain transactions can&#8217;t be edited, but bad that they can&#8217;t be cancelled.
+Or again, good for efficiency, bad for resilience.</p>
+</div>
+<div class="paragraph">
+<p>There may be a sweet spot for Blockchain in inter-bank settlements.
+It&#8217;s definitely getting a lot of interest there, but it&#8217;s not clear whether that will turn into production use.
+They have a relatively small number of players, external regulation and authorities, and they can dedicate professional resources to managing it.
+It&#8217;s an open question whether the efficiency gains offset the risk and cost of failures.</p>
+</div>
+<div class="paragraph">
+<p>To its credit, Blockchain is a brilliant solution to its original problem: a trusted system of record maintained by an untrusted, distributed, global network with unreliable connectivity and latency.
+Many things that most databases take as rare failure modes, it treats as normal behavior.
+But it&#8217;s less clear how useful it is outside that extreme environment.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-27 13:31:36 EDT
+Last updated 2016-06-17 15:02:28 EDT
 </div>
 </div>
 </body>
