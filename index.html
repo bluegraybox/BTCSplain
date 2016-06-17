@@ -499,12 +499,8 @@ They describe probabilities like 1/N where N is the number of atoms in the unive
 <p>In the oldest, simplest forms of cryptography, you take a message and replace each letter in it with a different letter according to some formula.
 In short:</p>
 </div>
-<div class="sidebarblock">
-<div class="content">
 <div class="paragraph">
-<p>message &#8594; math! &#8594; encrypted message</p>
-</div>
-</div>
+<p><span class="image"><img src="slides/img/encrypt-message.png" alt="simple message encryption"></span></p>
 </div>
 <div class="paragraph">
 <p>Here, the math is the secret part. If you know the math, you can decrypt the message.
@@ -513,22 +509,14 @@ To decrypt the message, you just rotate each letter back.
 It&#8217;s a pretty dumb cipher.
 Modern encryption is way more sophisticated, but fundamentally it&#8217;s still:</p>
 </div>
-<div class="sidebarblock">
-<div class="content">
 <div class="paragraph">
-<p>data &#8594; math! &#8594; encrypted data</p>
-</div>
-</div>
+<p><span class="image"><img src="slides/img/encrypt-simple.png" alt="simple data encryption"></span></p>
 </div>
 <div class="paragraph">
 <p>One important innovation is the concept of "keys":</p>
 </div>
-<div class="sidebarblock">
-<div class="content">
 <div class="paragraph">
-<p>data &#8594; math(key)! &#8594; encrypted data</p>
-</div>
-</div>
+<p><span class="image"><img src="slides/img/encrypt-keyed.png" alt="keyed encryption"></span></p>
 </div>
 <div class="paragraph">
 <p>Here the math part is not the secret.
@@ -536,12 +524,8 @@ In fact, the more public scrutiny it gets, the more trustworthy it is.
 What&#8217;s secret is the key.
 Normally (in what we&#8217;ll now call "symmetric key cryptography") you use the same key for encrypting and decrypting:</p>
 </div>
-<div class="sidebarblock">
-<div class="content">
 <div class="paragraph">
-<p>data &#8594; math(key)! &#8594; encrypted data &#8594; math(key)! &#8594; data</p>
-</div>
-</div>
+<p><span class="image"><img src="slides/img/decrypt-keyed.png" alt="keyed decryption"></span></p>
 </div>
 <div class="paragraph">
 <p>The tricky thing with this scheme is getting the key safely to someone else that you want to be able to decrypt your message.</p>
@@ -555,13 +539,11 @@ Normally (in what we&#8217;ll now call "symmetric key cryptography") you use the
 <p>In public key cryptography, there are two keys.
 You can use either key to encrypt, but anything you encrypt with one can only be decrypted with the other:</p>
 </div>
-<div class="sidebarblock">
-<div class="content">
 <div class="paragraph">
-<p>data &#8594; math(keyA)! &#8594; encrypted data &#8594; math(<strong>keyB</strong>)! &#8594; data<br>
-data &#8594; math(keyA)! &#8594; encrypted data &#8594; math(<strong>keyA</strong>)! &#8594; garbage</p>
+<p><span class="image"><img src="slides/img/public-key-1.png" alt="public key encryption"></span></p>
 </div>
-</div>
+<div class="paragraph">
+<p><span class="image"><img src="slides/img/public-key-2.png" alt="public key decryption"></span></p>
 </div>
 <div class="paragraph">
 <p>One of them is private, one is public.
@@ -594,12 +576,8 @@ If I encrypt something with my private key and your public key, only you can rea
 <p>A hash function is math that takes in data and spits out a single number.
 The data can be anything from a single byte to a high-def movie file.</p>
 </div>
-<div class="sidebarblock">
-<div class="content">
 <div class="paragraph">
-<p>data &#8594; math! &#8594; number</p>
-</div>
-</div>
+<p><span class="image"><img src="slides/img/crypto-hash.png" alt="cryptographic hash function"></span></p>
 </div>
 <div class="paragraph">
 <p>There are a few key things about this:</p>
@@ -812,8 +790,10 @@ How do we store that transaction history and not have to validate the whole chai
 <div class="sectionbody">
 <div class="paragraph">
 <p>That brings us to the actual Blockchain.
-Rather than validating and storing each transaction individually, they&#8217;re grouped into blocks, along with header data which includes hashes of its own transactions and of the previous block&#8217;s header.
-Modifying an earlier block would change its hash, making any tampering evident.</p>
+Rather than validating and storing each transaction individually, they&#8217;re grouped into blocks along with header data.
+This includes hashes of this block&#8217;s transactions and of the previous block&#8217;s header.
+Modifying an earlier block would change its hash, making any tampering evident.
+Note that this only tells you that there was a change, not what it was.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="slides/img/blockchain.png" alt="Blockchain"></span></p>
@@ -1039,7 +1019,7 @@ But it&#8217;s less clear how useful it is outside that extreme environment.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-17 15:02:28 EDT
+Last updated 2016-06-17 16:56:22 EDT
 </div>
 </div>
 </body>

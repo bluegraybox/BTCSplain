@@ -50,9 +50,7 @@ They describe probabilities like 1/N where N is the number of atoms in the unive
 In the oldest, simplest forms of cryptography, you take a message and replace each letter in it with a different letter according to some formula.
 In short:
 
-****
-message -> math! -> encrypted message
-****
+image:slides/img/encrypt-message.png[simple message encryption]
 
 Here, the math is the secret part. If you know the math, you can decrypt the message.
 A classic one is Rot-13, where you "rotate" each letter of the alphabet by 13, so "a" becomes "n", "b" becomes "o", and so on.
@@ -60,24 +58,18 @@ To decrypt the message, you just rotate each letter back.
 It's a pretty dumb cipher.
 Modern encryption is way more sophisticated, but fundamentally it's still:
 
-****
-data -> math! -> encrypted data
-****
+image:slides/img/encrypt-simple.png[simple data encryption]
 
 One important innovation is the concept of "keys":
 
-****
-data -> math(key)! -> encrypted data
-****
+image:slides/img/encrypt-keyed.png[keyed encryption]
 
 Here the math part is not the secret.
 In fact, the more public scrutiny it gets, the more trustworthy it is.
 What's secret is the key.
 Normally (in what we'll now call "symmetric key cryptography") you use the same key for encrypting and decrypting:
 
-****
-data -> math(key)! -> encrypted data -> math(key)! -> data
-****
+image:slides/img/decrypt-keyed.png[keyed decryption]
 
 The tricky thing with this scheme is getting the key safely to someone else that you want to be able to decrypt your message.
 
@@ -86,10 +78,9 @@ The tricky thing with this scheme is getting the key safely to someone else that
 In public key cryptography, there are two keys.
 You can use either key to encrypt, but anything you encrypt with one can only be decrypted with the other:
 
-****
-data -> math(keyA)! -> encrypted data -> math(*keyB*)! -> data +
-data -> math(keyA)! -> encrypted data -> math(*keyA*)! -> garbage
-****
+image:slides/img/public-key-1.png[public key encryption]
+
+image:slides/img/public-key-2.png[public key decryption]
 
 One of them is private, one is public.
 The private key, you have to keep safe and secret. Really, really safe.
@@ -113,9 +104,7 @@ How you deal with keys being stolen is a whole topic on its own. We'll get to th
 A hash function is math that takes in data and spits out a single number.
 The data can be anything from a single byte to a high-def movie file.
 
-****
-data -> math! -> number
-****
+image:slides/img/crypto-hash.png[cryptographic hash function]
 
 There are a few key things about this:
 
@@ -262,8 +251,10 @@ How do we store that transaction history and not have to validate the whole chai
 == Blockchain
 
 That brings us to the actual Blockchain.
-Rather than validating and storing each transaction individually, they're grouped into blocks, along with header data which includes hashes of its own transactions and of the previous block's header.
+Rather than validating and storing each transaction individually, they're grouped into blocks along with header data.
+This includes hashes of this block's transactions and of the previous block's header.
 Modifying an earlier block would change its hash, making any tampering evident.
+Note that this only tells you that there was a change, not what it was.
 
 image:slides/img/blockchain.png[Blockchain]
 
