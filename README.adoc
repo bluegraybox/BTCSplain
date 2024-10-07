@@ -5,7 +5,7 @@
 :toc-placement!:
 :toclevels: 2
 
-_View on http://bluegraybox.github.io/BTCSplain/[GitHub Pages]_
+_https://github.com/bluegraybox/BTCSplain[Source] on GitHub, http://bluegraybox.github.io/BTCSplain/[essay] and https://bluegraybox.github.io/BTCSplain/slides/[presentation slides] on GitHub Pages. A slightly edited version was published on the https://medium.com/capital-one-tech/bitcoin-blockchain-and-building-blocks-9f304380c77d[Capital One Tech Blog]._
 
 toc::[]
 
